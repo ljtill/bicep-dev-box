@@ -1,8 +1,12 @@
 # Dev Box
 
-## Introduction
+Microsoft Dev Box is an Azure service that gives developers access to ready-to-code, project-specific dev boxes that are preconfigured and centrally managed. Support hybrid dev teams of any size with high-performance, cloud-based workstations, and let developers focus on writing code by streamlining access to the tools they need.
 
-This repository contains the modules and tools to quickly scaffold a new [Microsoft Dev Box](https://azure.microsoft.com/services/dev-box/) environment.
+This repository contains the infra-as-code components to quickly scaffold a new [Microsoft Dev Box](https://azure.microsoft.com/services/dev-box) environment.
+
+_Please note these artifacts are under development and subject to change._
+
+---
 
 ### Getting Started
 
@@ -30,7 +34,7 @@ The following resources will be provisioned as part of the deployment.
 - DevCenter Project
 - DevCenter Pools
 
-## Useful Links
+### Links
 
 - [Microsoft Dev Box](https://docs.microsoft.com/azure/dev-box)
 - [Azure Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep)
