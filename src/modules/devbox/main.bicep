@@ -9,10 +9,10 @@ targetScope = 'resourceGroup'
 // ---------
 
 // Managed Identity
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' = {
   name: config.devbox.resources.name
   location: config.location
-  tags: config.network.resources.tags
+  tags: config.devbox.resources.tags
 }
 
 // Compute Gallery
@@ -33,7 +33,7 @@ resource networkConnection 'Microsoft.DevCenter/networkconnections@2022-08-01-pr
     subnetId: virtualNetwork.properties.subnets[0].id
     networkingResourceGroupName: 'Interfaces'
   }
-  tags: config.network.resources.tags
+  tags: config.devbox.resources.tags
 }
 
 // DevCenter
@@ -47,7 +47,7 @@ resource devCenter 'Microsoft.DevCenter/devcenters@2022-08-01-preview' = {
     }
   }
   properties: {}
-  tags: config.network.resources.tags
+  tags: config.devbox.resources.tags
 }
 
 // DevCenter Attached Networks
@@ -112,7 +112,7 @@ resource projectPools 'Microsoft.DevCenter/projects/pools@2022-08-01-preview' = 
 // Resources
 // ---------
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-01-01' existing = {
   name: config.network.resources.name
   scope: resourceGroup(config.network.resourceGroup.name)
 }
@@ -129,8 +129,8 @@ var images = [
 ]
 
 var pools = [
-  'Windows-11-with-OS-Optimizations'
-  'Windows-11-with-Microsoft-365-Apps'
+  'Win-11-OS'
+  'Win-11-M365'
 ]
 
 var compute = [
