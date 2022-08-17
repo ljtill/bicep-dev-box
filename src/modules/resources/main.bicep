@@ -9,14 +9,14 @@ targetScope = 'subscription'
 // ---------
 
 resource network 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: config.network.resourceGroup
+  name: config.network.resourceGroup.name
   location: config.location
   properties: {}
   tags: tags
 }
 
-resource desktop 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: config.desktops.resourceGroup
+resource devbox 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: config.devbox.resourceGroup.name
   location: config.location
   properties: {}
   tags: tags
