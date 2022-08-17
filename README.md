@@ -2,7 +2,7 @@
 
 Microsoft Dev Box is an Azure service that gives developers access to ready-to-code, project-specific dev boxes that are preconfigured and centrally managed. Support hybrid dev teams of any size with high-performance, cloud-based workstations, and let developers focus on writing code by streamlining access to the tools they need.
 
-This repository contains the infra-as-code components to quickly scaffold a new [Microsoft Dev Box](https://azure.microsoft.com/services/dev-box) environment.
+This repository contains the infra-as-code components to quickly scaffold a new Microsoft Dev Box environment.
 
 _Please note these artifacts are under development and subject to change._
 
