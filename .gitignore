@@ -3,3 +3,6 @@
 
 # VS Code
 .vscode/
+
+# Bicep
+azureconfig.local.json
