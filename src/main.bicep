@@ -4,24 +4,46 @@
 
 targetScope = 'subscription'
 
-// ---------
+// -------
 // Modules
-// ---------
+// -------
 
 // Resources
 module resources './modules/resources/main.bicep' = {
   name: 'Microsoft.Resources'
   scope: subscription()
   params: {
-    location: location
+    config: config
   }
+}
+
+// Network
+module network './modules/network/main.bicep' = {
+  name: 'Microsoft.Network'
+  scope: resourceGroup(config.network.resourceGroup.name)
+  params: {
+    config: config
+  }
+  dependsOn: [
+    resources
+  ]
+}
+
+// Dev Box
+module devbox 'modules/devbox/main.bicep' = {
+  name: 'Microsoft.DevBox'
+  scope: resourceGroup(config.devbox.resourceGroup.name)
+  params: {
+    config: config
+  }
+  dependsOn: [
+    resources
+    network
+  ]
 }
 
 // ---------
 // Variables
 // ---------
 
-var location = {
-  name: ''
-  prefix: ''
-}
+var config = loadJsonContent('azureconfig.json')

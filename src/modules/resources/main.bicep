@@ -8,23 +8,23 @@ targetScope = 'subscription'
 // Resources
 // ---------
 
-resource resource_group 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${location.prefix}-RG0'
-  location: location.name
+resource network 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: config.network.resourceGroup
+  location: config.location
   properties: {}
   tags: tags
 }
 
-// ---------
-// Variables
-// ---------
-
-var tags = {
-  Provisioner: 'Bicep'
+resource desktop 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: config.desktops.resourceGroup
+  location: config.location
+  properties: {}
+  tags: tags
 }
 
-// ---------
+// ----------
 // Parameters
-// ---------
+// ----------
 
-param location object
+param config object
+param tags object = {}
