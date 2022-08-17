@@ -7,10 +7,10 @@ This repository contains the modules and tools to quickly scaffold a new [Micros
 ### Getting Started
 
 1. Configure Azure Active Directory
-    1. Create a new application & service principal
-    2. Add federated credentials to the application
+    1. Create a new application
+    2. Setup the federated credentials
 2. Configure GitHub Actions
-    1. Create the following secrets for the workflows
+    1. Add the following repository secrets
         - ARM_TENANT_ID
         - ARM_SUBSCRIPTION_ID
         - ARM_CLIENT_ID
@@ -19,7 +19,7 @@ This repository contains the modules and tools to quickly scaffold a new [Micros
 
 ### Resources
 
-The following resources will be created as part of the deployment.
+The following resources will be provisioned as part of the deployment.
 
 - Virtual Network
 - Network Security Group
@@ -32,6 +32,6 @@ The following resources will be created as part of the deployment.
 
 ## Useful Links
 
-[Microsoft Dev Box](https://docs.microsoft.com/azure/dev-box)
-[Azure Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep)
-[OpenID Connect](https://docs.github.com/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure)
+- [Microsoft Dev Box](https://docs.microsoft.com/azure/dev-box)
+- [Azure Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep)
+- [OpenID Connect](https://docs.github.com/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure)
