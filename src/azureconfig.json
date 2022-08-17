@@ -1,0 +1,23 @@
+{
+    "location": "uksouth",
+    "network": {
+        "resourceGroup": {
+            "name": "Network"
+        },
+        "resources": {
+            "name": "",
+            "properties": {},
+            "tags": {}
+        }
+    },
+    "devbox": {
+        "resourceGroup": {
+            "name": "DevBox"
+        },
+        "resources": {
+            "name": "",
+            "properties": {},
+            "tags": {}
+        }
+    }
+}
