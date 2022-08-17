@@ -2,20 +2,20 @@
 
 ## Introduction
 
-This repository contains the modules and tools to quickly scaffold a new Dev Box environment.
+This repository contains the modules and tools to quickly scaffold a new [Microsoft Dev Box](https://azure.microsoft.com/services/dev-box/) environment.
 
 ### Getting Started
 
 1. Configure Azure Active Directory
-  1. Create a new application & service principal
-  2. Add federated credentials to the application
+    1. Create a new application & service principal
+    2. Add federated credentials to the application
 2. Configure GitHub Actions
-  1. Create the following secrets for the workflows
-    - ARM_TENANT_ID
-    - ARM_SUBSCRIPTION_ID
-    - ARM_CLIENT_ID
+    1. Create the following secrets for the workflows
+        - ARM_TENANT_ID
+        - ARM_SUBSCRIPTION_ID
+        - ARM_CLIENT_ID
 3. Configure Azure Deployment
-  1. Update the `src/azureconfig.json` with required values
+    1. Update `src/azureconfig.json` file with required values
 
 ### Resources
 
