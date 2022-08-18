@@ -10,20 +10,28 @@ _Please note these artifacts are under development and subject to change._
 
 ### Getting Started
 
-1. Configure Azure Active Directory
-    1. Create a new application
-    2. Setup the federated credentials
-2. Configure GitHub Actions
-    1. Add the following repository secrets
-        - ARM_TENANT_ID
-        - ARM_SUBSCRIPTION_ID
-        - ARM_CLIENT_ID
-3. Configure Azure Deployment
-    1. Update `src/azureconfig.json` file with required values
+Azure Active Directory
 
-### Resources
+- Create new application
+- Setup federated credentials
+- Create role assignment
 
-The following resources will be provisioned as part of the deployment.
+GitHub Actions
+
+- Add repository secrets
+  - ARM_TENANT_ID
+  - ARM_SUBSCRIPTION_ID
+  - ARM_CLIENT_ID
+
+Azure Deployment
+
+- Update settings - `src/azureconfig.json`
+
+---
+
+### Deployment
+
+The following resources will be provisioned.
 
 - Virtual Network
 - Network Security Group
@@ -33,6 +41,8 @@ The following resources will be provisioned as part of the deployment.
 - DevCenter Definitions
 - DevCenter Project
 - DevCenter Pools
+
+---
 
 ### Links
 
