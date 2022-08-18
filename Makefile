@@ -18,4 +18,5 @@ validate:
 
 delete:
 	@echo "=> Deleting platform..."
-	@az group list --output json | jq -r '.[].name' | xargs -rtL1 az group delete --yes --no-wait --name
+	@cat "$(AZURE_CONFIG_FILE)" | jq -r '.devbox.resourceGroup.name' | xargs -rtL1 az group delete --yes --no-wait --name
+	@cat "$(AZURE_CONFIG_FILE)" | jq -r '.network.resourceGroup.name' | xargs -rtL1 az group delete --yes --no-wait --name
