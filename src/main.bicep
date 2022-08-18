@@ -42,8 +42,8 @@ module devbox 'modules/devbox/main.bicep' = {
   ]
 }
 
-// ---------
-// Variables
-// ---------
+// ----------
+// Parameters
+// ----------
 
-var config = loadJsonContent('azureconfig.json')
+param config object = {}
