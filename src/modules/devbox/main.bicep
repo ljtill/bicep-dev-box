@@ -83,6 +83,9 @@ resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-08-0
     }
     osStorageType: storage[0]
   }
+  dependsOn: [
+    attachedNetworks
+  ]
 }]
 
 // DevCenter Project
