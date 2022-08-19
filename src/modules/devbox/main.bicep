@@ -70,18 +70,18 @@ resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2022-
 // }
 
 // DevCenter Definitions
-resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-08-01-preview' = [for (image, count) in images: {
+resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-08-01-preview' = [for definition in config.devbox.resources.properties.definitions: {
   parent: devCenter
-  name: 'definition-${count}'
+  name: definition.name
   location: config.location
   properties: {
     imageReference: {
-      id: '${devCenter.id}/galleries/default/images/${image}'
+      id: '${devCenter.id}/galleries/default/images/${image[definition.image]}'
     }
     sku: {
-      name: compute[0]
+      name: compute[definition.compute]
     }
-    osStorageType: storage[0]
+    osStorageType: storage[definition.storage]
   }
   dependsOn: [
     attachedNetworks
@@ -89,27 +89,28 @@ resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-08-0
 }]
 
 // DevCenter Project
+// TODO: Support multiple projects
 resource project 'Microsoft.DevCenter/projects@2022-08-01-preview' = {
-  name: 'default'
+  name: config.devbox.resources.properties.project.name
   location: config.location
   properties: {
     devCenterId: devCenter.id
-    description: ''
+    description: config.devbox.resources.properties.project.description
   }
+  resource pools 'pools' = [for pool in config.devbox.resources.properties.project.pools: {
+    name: pool.name
+    location: config.location
+    properties: {
+      devBoxDefinitionName: pool.definition
+      networkConnectionName: 'default'
+      licenseType: 'Windows_Client'
+      localAdministrator: pool.administrator
+    }
+  }]
+  dependsOn: [
+    definitions
+  ]
 }
-
-// DevCenter Project Pool
-resource projectPools 'Microsoft.DevCenter/projects/pools@2022-08-01-preview' = [for count in range(0, length(images)): {
-  parent: project
-  name: pools[count]
-  location: config.location
-  properties: {
-    devBoxDefinitionName: 'definition-${count}'
-    networkConnectionName: 'default'
-    licenseType: 'Windows_Client'
-    localAdministrator: 'Enabled'
-  }
-}]
 
 // ---------
 // Resources
@@ -124,33 +125,21 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-01-01' existing 
 // Variables
 // ---------
 
-var images = [
-  // Windows 11 Enterprise + OS Optimizations 21H2
-  'microsoftwindowsdesktop_windows-ent-cpc_win11-21h2-ent-cpc-os'
-  // Windows 11 Enterprise + Microsoft 365 Apps 21H2
-  'microsoftwindowsdesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365'
-]
+var image = {
+  'win-11-ent-os-opt': 'microsoftwindowsdesktop_windows-ent-cpc_win11-21h2-ent-cpc-os'
+  'win-11-ent-m365-apps': 'microsoftwindowsdesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365'
+}
 
-var pools = [
-  'Win-11-OS'
-  'Win-11-M365'
-]
+var compute = {
+  '4-vcpu-16gb-mem': 'general_a_4c16gb_v1'
+  '8-vcpu-32gb-mem': 'general_a_8c32gb_v1'
+}
 
-var compute = [
-  // 4 vCPU + 16 GB RAM
-  'general_a_4c16gb_v1'
-  // 8 vCPU + 32 GB RAM
-  'general_a_8c32gb_v1'
-]
-
-var storage = [
-  // 256 GB SSD
-  'ssd_256gb'
-  // 512 GB SSD
-  'ssd_512gb'
-  // 1024 GB SSD
-  'ssd_1024gb'
-]
+var storage = {
+  '256gb-ssd': 'ssd_256gb'
+  '512gb-ssd': 'ssd_512gb'
+  '1024gb-ssd': 'ssd_1024gb'
+}
 
 // ----------
 // Parameters
