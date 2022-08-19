@@ -6,7 +6,12 @@
         },
         "resources": {
             "name": "",
-            "properties": {},
+            "properties": {
+                "addressPrefix": "10.0.0.0/16",
+                "subnet": {
+                    "addressPrefix": "10.0.0.0/24"
+                }
+            },
             "tags": {}
         }
     },
@@ -16,7 +21,45 @@
         },
         "resources": {
             "name": "",
-            "properties": {},
+            "properties": {
+                "definitions": [
+                    {
+                        "name": "base-small",
+                        "image": "win-11-ent-os-opt",
+                        "compute": "4-vcpu-16gb-mem",
+                        "storage": "256gb-ssd"
+                    },
+                    {
+                        "name": "base-medium",
+                        "image": "win-11-ent-os-opt",
+                        "compute": "8-vcpu-32gb-mem",
+                        "storage": "256gb-ssd"
+                    },
+                    {
+                        "name": "apps-small",
+                        "image": "win-11-ent-m365-apps",
+                        "compute": "4-vcpu-16gb-mem",
+                        "storage": "256gb-ssd"
+                    },
+                    {
+                        "name": "apps-medium",
+                        "image": "win-11-ent-m365-apps",
+                        "compute": "8-vcpu-32gb-mem",
+                        "storage": "256gb-ssd"
+                    }
+                ],
+                "project": {
+                    "name": "default",
+                    "description": "",
+                    "pools": [
+                        {
+                            "name": "default",
+                            "definition": "base-small",
+                            "administrator": "Enabled"
+                        }
+                    ]
+                }
+            },
             "tags": {}
         }
     }
