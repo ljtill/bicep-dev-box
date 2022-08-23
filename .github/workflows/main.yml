@@ -29,8 +29,8 @@ jobs:
 
       - name: Build
         run: |
-          az bicep build `
-            --template-file ./src/main.bicep
+          az bicep build \
+            --file ./src/main.bicep
 
       - name: Upload
         uses: actions/upload-artifact@v3
@@ -61,10 +61,10 @@ jobs:
 
       - name: Validate
         run: |
-          az deployment sub what-if `
-           --name ${{ env.deployment-name }} `
-           --location ${{ env.deployment-location }} `
-           --template-file ./src/main.json `
+          az deployment sub what-if \
+           --name ${{ env.deployment-name }} \
+           --location ${{ env.deployment-location }} \
+           --template-file ./src/main.json \
            --parameters config=@./src/azureconfig.json
 
   deploy:
@@ -90,8 +90,8 @@ jobs:
 
       - name: Deploy
         run: |
-          az deployment sub create `
-            --name ${{ env.deployment-name }} `
-            --location ${{ env.deployment-location }} `
-            --template-file ./src/main.json `
+          az deployment sub create \
+            --name ${{ env.deployment-name }} \
+            --location ${{ env.deployment-location }} \
+            --template-file ./src/main.json \
             --parameters config=@./src/azureconfig.json
