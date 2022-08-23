@@ -19,9 +19,9 @@ Azure Active Directory
 GitHub Actions
 
 - Add repository secrets
-  - ARM_TENANT_ID
-  - ARM_SUBSCRIPTION_ID
-  - ARM_CLIENT_ID
+  - AZURE_TENANT_ID
+  - AZURE_SUBSCRIPTION_ID
+  - AZURE_CLIENT_ID
 
 Azure Deployment
 
