@@ -25,7 +25,11 @@ GitHub Actions
 
 Azure Deployment
 
-- Update settings - `src/azureconfig.json`
+- Update config settings
+
+Azure DevCenter
+
+- Create role assignment for to project
 
 ---
 
