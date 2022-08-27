@@ -1,4 +1,4 @@
-AZURE_CONFIG_FILE ?= "./src/azureconfig.json"
+AZURE_CONFIG_FILE ?= "./src/configs/main.json"
 
 build:
 	@echo "=> Building templates..."
