@@ -12,8 +12,8 @@ _Please note these artifacts are under development and subject to change._
 
 Azure Active Directory - Application
 
-- Navigate to the 'App Registration' blade wihin the Azure portal.
-- Select 'New registration' and provide a Name for the application.
+- Navigate to the 'App Registration' blade wihin the Azure portal
+- Select 'New registration' and provide a Name for the application
 - Select the newly created application and select 'Certificates & secrets'
 - Select 'Federated Credentials' and 'Add credential'
 - Provide the 'Organization (username)' and Repository for the credential
@@ -21,7 +21,7 @@ Azure Active Directory - Application
 
 Azure Resource Manager - Role Assignment
 
-- Navigate to the Subscription in the Azure portal.
+- Navigate to the Subscription in the Azure portal
 - Select 'Access control (IAM)' and 'Add' - 'Add role assignment'
 - Select Role - Contributor and select 'Members'
 - Provide the 'Name' of the application from the previous steps
@@ -37,17 +37,18 @@ GitHub Actions - Secrets
 
 Azure Deployment
 
-- Within the `src/`
+- Update the `src/configs/main.json` file with environment specifics
 
-Azure DevCenter
+Azure Resource Manager - Role Assignment - Post Deployment
 
-- Create role assignment for to project
+- Navigate to the DevCenter Project resource in the Azure Portal
+- Select 'Access control (IAM)' and 'Add' - 'Add role assignment'
+- Select Role 'DevCenter Dev Box User' and select Members
+- Provide the 'Name' of the User / Groups for assignment
 
 ---
 
-### Deployment
-
-The following resources will be provisioned.
+### Deployed Resources
 
 - Virtual Network
 - Network Security Group
