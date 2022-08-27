@@ -10,22 +10,34 @@ _Please note these artifacts are under development and subject to change._
 
 ### Getting Started
 
-Azure Active Directory
+Azure Active Directory - Application
 
-- Create new application
-- Setup federated credentials
-- Create role assignment
+- Navigate to the 'App Registration' blade wihin the Azure portal.
+- Select 'New registration' and provide a Name for the application.
+- Select the newly created application and select 'Certificates & secrets'
+- Select 'Federated Credentials' and 'Add credential'
+- Provide the 'Organization (username)' and Repository for the credential
+- Select 'Entity type' - Branch and provide 'main'
 
-GitHub Actions
+Azure Resource Manager - Role Assignment
 
-- Add repository secrets
+- Navigate to the Subscription in the Azure portal.
+- Select 'Access control (IAM)' and 'Add' - 'Add role assignment'
+- Select Role - Contributor and select 'Members'
+- Provide the 'Name' of the application from the previous steps
+
+GitHub Actions - Secrets
+
+- Navigate to 'Settings' on the repository
+- Select 'Secrets' and 'Actions' link
+- Select 'New repository secret' and create a secret for the following:
   - AZURE_TENANT_ID
   - AZURE_SUBSCRIPTION_ID
   - AZURE_CLIENT_ID
 
 Azure Deployment
 
-- Update config settings
+- Within the `src/`
 
 Azure DevCenter
 
