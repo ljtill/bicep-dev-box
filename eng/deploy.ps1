@@ -7,7 +7,7 @@ param (
     $SubscriptionId,
 
     [Parameter(Mandatory = $false)]
-    $ConfigFile = "../src/configs/main.json",
+    $ConfigFile = $PSScriptRoot + "../src/configs/main.json",
 
     [Parameter(Mandatory = $false)]
     $WhatIf = $false
@@ -20,7 +20,7 @@ try {
     Set-AzContext -SubscriptionId $SubscriptionId
 }
 catch {
-    Write-Error "Failed to switch subscriptions"
+    Write-Error "Failed to switch subscription"
     Exit-PSSession 1
 }
 

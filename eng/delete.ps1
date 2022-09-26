@@ -7,7 +7,7 @@ param (
     $SubscriptionId,
 
     [Parameter(Mandatory = $false)]
-    $ConfigFile = "../src/configs/main.json"
+    $ConfigFile = $PSScriptRoot + "../src/configs/main.json"
 )
 
 $ErrorActionPreference = 'Stop'
