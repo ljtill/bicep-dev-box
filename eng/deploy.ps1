@@ -7,10 +7,7 @@ param (
     $SubscriptionId,
 
     [Parameter(Mandatory = $false)]
-    $ConfigFile = $PSScriptRoot + "../src/configs/main.json",
-
-    [Parameter(Mandatory = $false)]
-    $WhatIf = $false
+    $ConfigFile = $PSScriptRoot + "../src/configs/main.json"
 )
 
 $ErrorActionPreference = 'Stop'
@@ -30,10 +27,21 @@ try {
         -Name "Microsoft.Deployment" `
         -Location "uksouth" `
         -TemplateFile "./main.bicep" `
-        -TemplateParameterFile "$ConfigFile" `
-        -WhatIf:$WhatIf
+        -TemplateParameterFile "$ConfigFile"
 }
 catch {
     Write-Error "Failed to deploy resources"
     Exit-PSSession 1
 }
+
+# Write-Verbose "Creating assignment"
+# try {
+#     New-AzRoleAssignment `
+#         -RoleDefinitionName "DevCenter Dev Box User" `
+#         -ObjectId "" `
+#         -Scope "/subscriptions/$SubscriptionId/resourceGroups/DevBox/{}/projects/default"
+# }
+# catch {
+#     Write-Error "Failed to create role assignment"
+#     Exit-PSSession 1
+# }

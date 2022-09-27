@@ -21,7 +21,7 @@ catch {
     Exit-PSSession 1
 }
 
-Write-Verbose "Loading config file"
+Write-Verbose "Parsing config file"
 try {
     $config = Get-Content -Path $ConfigFile | ConvertFrom-Json
 }
