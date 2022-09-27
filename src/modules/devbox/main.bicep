@@ -16,8 +16,7 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-
 }
 
 // Compute Gallery
-// TODO: Disabled due to validation error
-// resource computeGallery 'Microsoft.Compute/galleries@2021-07-01' = {
+// resource computeGallery 'Microsoft.Compute/galleries@2022-01-03' = {
 //   name: config.devbox.resources.name
 //   location: config.location
 //   properties: {}
@@ -25,7 +24,7 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-
 // }
 
 // Network Connection
-resource networkConnection 'Microsoft.DevCenter/networkconnections@2022-08-01-preview' = {
+resource networkConnection 'Microsoft.DevCenter/networkconnections@2022-09-01-preview' = {
   name: config.devbox.resources.name
   location: config.location
   properties: {
@@ -37,7 +36,7 @@ resource networkConnection 'Microsoft.DevCenter/networkconnections@2022-08-01-pr
 }
 
 // DevCenter
-resource devCenter 'Microsoft.DevCenter/devcenters@2022-08-01-preview' = {
+resource devCenter 'Microsoft.DevCenter/devcenters@2022-09-01-preview' = {
   name: config.devbox.resources.name
   location: config.location
   identity: {
@@ -51,7 +50,7 @@ resource devCenter 'Microsoft.DevCenter/devcenters@2022-08-01-preview' = {
 }
 
 // DevCenter Attached Networks
-resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2022-08-01-preview' = {
+resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2022-09-01-preview' = {
   parent: devCenter
   name: 'default'
   properties: {
@@ -60,8 +59,8 @@ resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2022-
 }
 
 // DevCenter Galleries
-// TODO: Disabled due to validation error
-// resource galleries 'Microsoft.DevCenter/devcenters/galleries@2022-08-01-preview' = {
+// FIX(26): TemplateDeploymentValidationFailed
+// resource galleries 'Microsoft.DevCenter/devcenters/galleries@2022-09-01-preview' = {
 //   parent: devCenter
 //   name: config.devbox.resources.name
 //   properties: {
@@ -70,7 +69,7 @@ resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2022-
 // }
 
 // DevCenter Definitions
-resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-08-01-preview' = [for definition in config.devbox.resources.properties.definitions: {
+resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-09-01-preview' = [for definition in config.devbox.resources.properties.definitions: {
   parent: devCenter
   name: definition.name
   location: config.location
@@ -90,7 +89,7 @@ resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-08-0
 
 // DevCenter Project
 // TODO: Support multiple projects
-resource project 'Microsoft.DevCenter/projects@2022-08-01-preview' = {
+resource project 'Microsoft.DevCenter/projects@2022-09-01-preview' = {
   name: config.devbox.resources.properties.project.name
   location: config.location
   properties: {
