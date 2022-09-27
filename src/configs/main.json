@@ -1,66 +1,74 @@
 {
-    "location": "",
-    "network": {
-        "resourceGroup": {
-            "name": "Network"
-        },
-        "resources": {
-            "name": "",
-            "properties": {
-                "addressPrefix": "10.0.0.0/16",
-                "subnet": {
-                    "addressPrefix": "10.0.0.0/24"
-                }
-            },
-            "tags": {}
-        }
-    },
-    "devbox": {
-        "resourceGroup": {
-            "name": "DevBox"
-        },
-        "resources": {
-            "name": "",
-            "properties": {
-                "definitions": [
-                    {
-                        "name": "base-small",
-                        "image": "win-11-ent-os-opt",
-                        "compute": "4-vcpu-16gb-mem",
-                        "storage": "256gb-ssd"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "config": {
+            "value": {
+                "location": "uksouth",
+                "network": {
+                    "resourceGroup": {
+                        "name": "Network"
                     },
-                    {
-                        "name": "base-medium",
-                        "image": "win-11-ent-os-opt",
-                        "compute": "8-vcpu-32gb-mem",
-                        "storage": "256gb-ssd"
-                    },
-                    {
-                        "name": "apps-small",
-                        "image": "win-11-ent-m365-apps",
-                        "compute": "4-vcpu-16gb-mem",
-                        "storage": "256gb-ssd"
-                    },
-                    {
-                        "name": "apps-medium",
-                        "image": "win-11-ent-m365-apps",
-                        "compute": "8-vcpu-32gb-mem",
-                        "storage": "256gb-ssd"
+                    "resources": {
+                        "name": "",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/16",
+                            "subnet": {
+                                "addressPrefix": "10.0.0.0/24"
+                            }
+                        },
+                        "tags": {}
                     }
-                ],
-                "project": {
-                    "name": "default",
-                    "description": "",
-                    "pools": [
-                        {
-                            "name": "default",
-                            "definition": "base-small",
-                            "administrator": "Enabled"
-                        }
-                    ]
+                },
+                "devbox": {
+                    "resourceGroup": {
+                        "name": "DevBox"
+                    },
+                    "resources": {
+                        "name": "",
+                        "properties": {
+                            "definitions": [
+                                {
+                                    "name": "base-small",
+                                    "image": "win-11-ent-os-opt",
+                                    "compute": "4-vcpu-16gb-mem",
+                                    "storage": "256gb-ssd"
+                                },
+                                {
+                                    "name": "base-medium",
+                                    "image": "win-11-ent-os-opt",
+                                    "compute": "8-vcpu-32gb-mem",
+                                    "storage": "256gb-ssd"
+                                },
+                                {
+                                    "name": "apps-small",
+                                    "image": "win-11-ent-m365-apps",
+                                    "compute": "4-vcpu-16gb-mem",
+                                    "storage": "256gb-ssd"
+                                },
+                                {
+                                    "name": "apps-medium",
+                                    "image": "win-11-ent-m365-apps",
+                                    "compute": "8-vcpu-32gb-mem",
+                                    "storage": "256gb-ssd"
+                                }
+                            ],
+                            "project": {
+                                "name": "default",
+                                "description": "",
+                                "pools": [
+                                    {
+                                        "name": "default",
+                                        "definition": "base-small",
+                                        "administrator": "Enabled"
+                                    }
+                                ]
+                            }
+                        },
+                        "tags": {}
+                    }
                 }
-            },
-            "tags": {}
+            }
         }
     }
 }
