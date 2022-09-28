@@ -21,11 +21,11 @@ if [ -z "$subscription_id" ]; then
 fi
 
 if [ -z "$config_file" ]; then
-    echo "=> Using default config file..."
+    echo "==> Using default config file..."
     config_file="./src/configs/main.json"
 fi
 
-echo "=> Switching subscription..."
+echo "==> Switching subscription..."
 az account set --subscription "$subscription_id"
 
 if [ $? -ne 0 ]; then
@@ -33,7 +33,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "=> Deploying resources..."
+echo "==> Deploying resources..."
 az deployment sub create \
     --name "Microsoft.Deployment" \
     --location "uksouth" \

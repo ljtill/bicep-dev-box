@@ -13,9 +13,9 @@ param (
     $ErrorActionPreference = 'Stop'
 )
 
-$InformationPreference = 'Continue'
+Write-Information "=> Starting deletion process..."
 
-Write-Information "=> Switching subscriptions..."
+Write-Information "==> Switching subscriptions..."
 try {
     $null = Set-AzContext -SubscriptionId $SubscriptionId
 }
@@ -25,7 +25,7 @@ catch {
     return
 }
 
-Write-Information "=> Parsing config file..."
+Write-Information "==> Parsing config file..."
 try {
     $config = (Get-Content -Path $ConfigFile | ConvertFrom-Json).parameters.config.value
 }
@@ -36,10 +36,10 @@ catch {
 }
 
 try {
-    Write-Information "=> Deleting devbox resources..."
+    Write-Information "==> Deleting devbox resources..."
     Remove-AzResourceGroup -Name $config.devbox.resourceGroup.name
 
-    Write-Information "=> Deleting network resources..."
+    Write-Information "==> Deleting network resources..."
     Remove-AzResourceGroup -Name $config.network.resourceGroup.name
 }
 catch {

@@ -20,11 +20,11 @@ if [ -z "$subscription_id" ]; then
 fi
 
 if [ -z "$config_file" ]; then
-    echo "=> Using default config file..."
+    echo "==> Using default config file..."
     config_file="./src/configs/main.json"
 fi
 
-echo "=> Switching subcription..."
+echo "==> Switching subcription..."
 az account set --subscription "$subscription_id"
 
 if [ $? -ne 0 ]; then
@@ -32,12 +32,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "=> Parsing config file..."
+echo "==> Parsing config file..."
 config_data=$(cat $config_file | jq -r '.parameters.config.value')
 devbox_resource=$(echo $config_data | jq -r '.devbox.resourceGroup.name')
 network_resource=$(echo $config_data | jq -r '.network.resourceGroup.name')
 
-echo "=> Deleting devbox resources..."
+echo "==> Deleting devbox resources..."
 az group delete --name $devbox_resource
 
 if [ $? -ne 0 ]; then
@@ -45,7 +45,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "=> Deleting network resources..."
+echo "==> Deleting network resources..."
 az group delete --name $network_resource
 
 if [ $? -ne 0 ]; then

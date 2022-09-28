@@ -17,7 +17,7 @@ param (
 
 Write-Information "=> Starting deployment process..."
 
-Write-Information "=> Switching subscriptions..."
+Write-Information "==> Switching subscriptions..."
 try {
     $null = Set-AzContext -SubscriptionId $SubscriptionId
 }
@@ -27,7 +27,7 @@ catch {
     return
 }
 
-Write-Information "=> Deploying resources..."
+Write-Information "==> Deploying resources..."
 try {
     New-AzSubscriptionDeployment `
         -Name "Microsoft.Deployment" `
