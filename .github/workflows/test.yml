@@ -39,12 +39,12 @@ jobs:
 
       - name: Deploy
         run: |
-          ./eng/deploy.sh -SubscriptionId ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ./eng/deploy.sh -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Delete
         if: success() || failure()
         run: |
-          ./eng/delete.sh -SubscriptionId ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ./eng/delete.sh -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
   test-pwsh:
     name: "Test (pwsh)"
