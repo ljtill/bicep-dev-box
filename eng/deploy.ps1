@@ -13,9 +13,9 @@ param (
     $ErrorActionPreference = 'Stop'
 )
 
-# TODO: Add role assignment
-
 Write-Information "=> Starting deployment process..."
+
+# TODO: Add role assignment
 
 Write-Information "==> Switching subscriptions..."
 try {
