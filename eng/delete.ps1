@@ -61,7 +61,6 @@ try {
     Remove-AzResourceGroup -Name $config.network.resourceGroup.name
 }
 catch {
-    Write-Verbose "Outter block"
     Write-Warning "Failed to delete resources"
     Write-Verbose $_.Exception.Message
     return
