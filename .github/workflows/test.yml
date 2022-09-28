@@ -1,9 +1,10 @@
 name: "Test"
 
 on:
-  workflow_run:
-    workflows: ["Build"]
-    types: [completed]
+  pull_request:
+    paths:
+      - "eng/**"
+      - "src/**"
 
 permissions:
   id-token: write
@@ -13,7 +14,7 @@ jobs:
   test-bash:
     name: "Test (bash)"
     runs-on: ubuntu-22.04
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: github.repository_owner == 'ljtill'
 
     steps:
       - name: Checkout
@@ -48,7 +49,7 @@ jobs:
   test-pwsh:
     name: "Test (pwsh)"
     runs-on: windows-2022
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: github.repository_owner == 'ljtill'
 
     steps:
       - name: Checkout
