@@ -1,0 +1,59 @@
+name: "Test"
+
+on:
+  pull_request:
+    paths:
+      - "eng/**"
+      - "src/**"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test:
+    name: "Test"
+    runs-on: ubuntu-22.04
+    if: github.repository_owner == 'ljtill'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Replace
+        run: |
+          name=$(echo $RANDOM | base64 | head -c 8 | tr -dc '[:alpha:]' | tr '[:upper:]' '[:lower:]'; echo)
+          contents="$(jq '.parameters.config.value.network.resources.name = "${name}"' ./src/configs/main.json)" \
+            && echo -E "${contents}" > ./src/configs/main.json
+          contents="$(jq '.parameters.config.value.devbox.resources.name = "${name}"' ./src/configs/main.json)" \
+            && echo -E "${contents}" > ./src/configs/main.json
+
+      - name: Build
+        run: |
+          az bicep build \
+            --file ./src/main.bicep
+
+      - name: Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID}}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy
+        run: |
+          az deployment sub create \
+            --name "GitHub.Actions" \
+            --location "uksouth" \
+            --template-file ./src/main.bicep \
+            --parameters ./src/configs/main.json
+
+      - name: Delete
+        if: success() || failure()
+        run: |
+          az group delete \
+            --name "DevBox" \
+            --yes
+          az group delete \
+            --name "Network" \
+            --yes
