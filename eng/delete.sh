@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO: Add script root invocation
-
 RED='\033[0;31m'
 
 while getopts s:c: option
@@ -14,13 +12,14 @@ done
 
 echo "=> Starting deletion process..."
 
+# TODO: Add script root invocation
+
 if [ -z "$subscription_id" ]; then
     echo -e "${RED}Missing script argument (-s subscriptionId)..."
     exit 1
 fi
 
 if [ -z "$config_file" ]; then
-    echo "==> Using default config file..."
     config_file="./src/configs/main.json"
 fi
 

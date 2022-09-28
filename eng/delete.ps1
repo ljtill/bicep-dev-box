@@ -36,13 +36,32 @@ catch {
 }
 
 try {
+    trap {
+        if ($_.Exception.Message -notlike "* - Provided resource group does not exist.") {
+            throw $_.Exception
+        }
+
+        continue
+    }
+
+    if ($env:CI -eq "true") {
+        Write-Information "==> Deleting devbox resources..."
+        Remove-AzResourceGroup -Name $config.devbox.resourceGroup.name -Force -Confirm:$false
+    }
+
     Write-Information "==> Deleting devbox resources..."
     Remove-AzResourceGroup -Name $config.devbox.resourceGroup.name
+
+    if ($env:CI -eq "true") {
+        Write-Information "==> Deleting network resources..."
+        Remove-AzResourceGroup -Name $config.network.resourceGroup.name -Force -Confirm:$false
+    }
 
     Write-Information "==> Deleting network resources..."
     Remove-AzResourceGroup -Name $config.network.resourceGroup.name
 }
 catch {
+    Write-Verbose "Outter block"
     Write-Warning "Failed to delete resources"
     Write-Verbose $_.Exception.Message
     return

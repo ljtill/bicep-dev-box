@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# TODO: Add script root invocation
-# TODO: Add role assignment
-
 RED='\033[0;31m'
 
 while getopts s:c: option
@@ -15,13 +12,16 @@ done
 
 echo "=> Starting deployment process..."
 
+# TODO: Add script root invocation
+# TODO: Add role assignment
+# TODO: Continous integration handler
+
 if [ -z "$subscription_id" ]; then
     echo -e "${RED}Missing script argument (-s subscriptionId)"
     exit 1
 fi
 
 if [ -z "$config_file" ]; then
-    echo "==> Using default config file..."
     config_file="./src/configs/main.json"
 fi
 
