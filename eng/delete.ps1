@@ -1,5 +1,5 @@
-<#
-#>
+#Requires -Version 7.0
+#Requires -Modules Az.Accounts, Az.Resources
 
 [CmdletBinding()]
 param (
@@ -7,38 +7,43 @@ param (
     $SubscriptionId,
 
     [Parameter(Mandatory = $false)]
-    $ConfigFile = $PSScriptRoot + "../src/configs/main.json"
+    $ConfigFile = ((Split-Path $PSScriptRoot) + "/src/configs/main.json"),
+
+    $InformationPreference = 'Continue',
+    $ErrorActionPreference = 'Stop'
 )
 
-$ErrorActionPreference = 'Stop'
+$InformationPreference = 'Continue'
 
-Write-Verbose "Switching subscriptions"
+Write-Information "=> Switching subscriptions..."
 try {
-    Set-AzContext -SubscriptionId $SubscriptionId
+    $null = Set-AzContext -SubscriptionId $SubscriptionId
 }
 catch {
-    Write-Error "Failed to switch subscriptions"
-    Exit-PSSession 1
+    Write-Warning "Failed to switch subscriptions"
+    Write-Verbose $_.Exception.Message
+    return
 }
 
-Write-Verbose "Parsing config file"
+Write-Information "=> Parsing config file..."
 try {
-    $config = Get-Content -Path $ConfigFile | ConvertFrom-Json
+    $config = (Get-Content -Path $ConfigFile | ConvertFrom-Json).parameters.config.value
 }
 catch {
-    Write-Error "Failed to load config file"
-    Exit-PSSession 1
+    Write-Warning "Failed to load config file"
+    Write-Verbose $_.Exception.Message
+    return
 }
 
-Write-Verbose "Deploying resources"
 try {
-    Write-Verbose "Deleting network resource group"
-    Remove-AzResourceGroup -Name $config.network.resourceGroup.name
-
-    Write-Verbose "Deleting devbox resource group"
+    Write-Information "=> Deleting devbox resources..."
     Remove-AzResourceGroup -Name $config.devbox.resourceGroup.name
+
+    Write-Information "=> Deleting network resources..."
+    Remove-AzResourceGroup -Name $config.network.resourceGroup.name
 }
 catch {
-    Write-Error "Failed to delete resources"
-    Exit-PSSession 1
+    Write-Warning "Failed to delete resources"
+    Write-Verbose $_.Exception.Message
+    return
 }

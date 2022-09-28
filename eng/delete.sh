@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: Add script root invocation
+
 RED='\033[0;31m'
 
 while getopts s:c: option
@@ -10,17 +12,19 @@ do
     esac
 done
 
+echo "=> Starting deletion process..."
+
 if [ -z "$subscription_id" ]; then
-    echo -e "${RED}=> Missing script argument (-s subscriptionId)..."
+    echo -e "${RED}Missing script argument (-s subscriptionId)..."
     exit 1
 fi
 
-# TODO: Add script root invocation
 if [ -z "$config_file" ]; then
-    $config_file="./src/configs/main.json"
+    echo "=> Using default config file..."
+    config_file="./src/configs/main.json"
 fi
 
-echo "Switching subcription"
+echo "=> Switching subcription..."
 az account set --subscription "$subscription_id"
 
 if [ $? -ne 0 ]; then
@@ -28,33 +32,23 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+echo "=> Parsing config file..."
+config_data=$(cat $config_file | jq -r '.parameters.config.value')
+devbox_resource=$(echo $config_data | jq -r '.devbox.resourceGroup.name')
+network_resource=$(echo $config_data | jq -r '.network.resourceGroup.name')
+
 echo "=> Deleting devbox resources..."
-network_resource_group=$(cat ./main.json | jq -r '.parameters.config.value.network.resourceGroup.name')
-while true; do
-    read -r -p "Are you sure you want to perform this operation? (y/n):" answer
-    case $answer in
-        [Yy]* ) az group delete -n x; break;;
-        [Nn]* ) echo -e "${RED}Operation cancelled."; exit;;
-        * ) echo "Please answer Y or N.";;
-    esac
-done
+az group delete --name $devbox_resource
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to delete devbox resources"
+    exit 1
+fi
 
 echo "=> Deleting network resources..."
-devbox_resource_group=$(cat ./main.json | jq -r '.parameters.config.value.devbox.resourceGroup.name')
+az group delete --name $network_resource
 
-while true; do
-    read -r -p "Are you sure you want to perform this operation? (y/n):" answer
-    case $answer in
-        [Yy]* ) az group delete -n x; break;;
-        [Nn]* ) echo -e "${RED}Operation cancelled."; exit;;
-        * ) echo "Please answer Y or N.";;
-    esac
-done
-
-# echo "Deleting resources"
-# az group delete --name ""
-
-# if [ $? -ne 0 ]; then
-#     echo "Failed to delete resources"
-#     exit 1
-# fi
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to delete network resources"
+    exit 1
+fi

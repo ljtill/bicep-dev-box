@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# TODO: Add script root invocation
+# TODO: Add role assignment
+
+RED='\033[0;31m'
+
 while getopts s:c: option
 do
     case "${option}" in
@@ -8,25 +13,26 @@ do
     esac
 done
 
+echo "=> Starting deployment process..."
+
 if [ -z "$subscription_id" ]; then
-    echo "=> Missing script argument (-s subscriptionId)..."
+    echo -e "${RED}Missing script argument (-s subscriptionId)"
     exit 1
 fi
 
-# TODO: Add script root invocation
 if [ -z "$config_file" ]; then
-    $config_file="./src/configs/main.json"
+    echo "=> Using default config file..."
+    config_file="./src/configs/main.json"
 fi
 
 echo "=> Switching subscription..."
 az account set --subscription "$subscription_id"
 
 if [ $? -ne 0 ]; then
-    echo "=> Failed to switch subscription"
+    echo -e "${RED}Failed to switch subscription"
     exit 1
 fi
 
-# TODO: Add script root invocation
 echo "=> Deploying resources..."
 az deployment sub create \
     --name "Microsoft.Deployment" \
@@ -35,18 +41,6 @@ az deployment sub create \
     --parameters $config_file
 
 if [ $? -ne 0 ]; then
-    echo "=> Failed to deploy resources"
+    echo -e "${RED}Failed to deploy resources"
     exit 1
 fi
-
-# echo "Creating assignment"
-# az role assignment create \
-#     --role "Contributor" \
-#     --assignee-object-id "$(az ad signed-in-user show --query objectId -o tsv)" \
-#     --scope "/subscriptions/$1"
-
-# if [ $? -ne 0 ]; then
-#     echo "Failed to create role assignment"
-#     exit 1
-# fi
-
