@@ -20,8 +20,7 @@ try {
     $null = Set-AzContext -SubscriptionId $SubscriptionId
 }
 catch {
-    Write-Warning "Failed to switch subscriptions"
-    Write-Verbose $_.Exception.Message
+    Write-Warning "Failed to switch subscriptions `nMESSAGE: $($_.Exception.Message)"
     return
 }
 
@@ -30,8 +29,7 @@ try {
     $config = (Get-Content -Path $ConfigFile | ConvertFrom-Json).parameters.config.value
 }
 catch {
-    Write-Warning "Failed to load config file"
-    Write-Verbose $_.Exception.Message
+    Write-Warning "Failed to load config file `nMESSAGE: $($_.Exception.Message)"
     return
 }
 
@@ -40,7 +38,6 @@ try {
         if ($_.Exception.Message -notlike "* - Provided resource group does not exist.") {
             throw $_.Exception
         }
-
         continue
     }
 
@@ -61,7 +58,6 @@ try {
     Remove-AzResourceGroup -Name $config.network.resourceGroup.name
 }
 catch {
-    Write-Warning "Failed to delete resources"
-    Write-Verbose $_.Exception.Message
+    Write-Warning "Failed to delete resources `nMESSAGE: $($_.Exception.Message)"
     return
 }
