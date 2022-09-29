@@ -15,8 +15,7 @@ _Please note these artifacts are under development and subject to change._
 
 ### Getting Started
 
-Before deploying the Dev Box resources, the configuration file needs to be updated.
-Edit the `src/configs/main.json` with environment specific details.
+Before deploying the Dev Box resources, the configuration file `src/configs/main.json` needs to be updated.
 
 #### Using locally with PowerShell
 
@@ -65,8 +64,7 @@ GitHub Actions - Secrets
 
 ### Connection
 
-After the deployment is complete, to provide the ability to create and
-connect to desktops following steps are required.
+After the deployment is complete, to provide the ability to create and connect to desktops following steps are required
 
 Azure Resource Manager
 
@@ -77,7 +75,7 @@ Azure Resource Manager
 
 Browser
 
-- Navigate to the Dev Box [portal](https://devbox.microsoft.com)
+- Navigate to the Dev Box Portal
 
 ---
 
@@ -100,5 +98,6 @@ Browser
   - [Key Concepts](https://learn.microsoft.com/azure/dev-box/concept-dev-box-concepts)
   - [How-to Guides](https://learn.microsoft.com/azure/dev-box/how-to-project-admin)
   - [Connect](https://learn.microsoft.com/azure/dev-box/tutorial-connect-to-dev-box-with-remote-desktop-app)
+  - [Portal](https://devbox.microsoft.com/)
 - [Azure Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep)
 - [OpenID Connect](https://docs.github.com/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure)
