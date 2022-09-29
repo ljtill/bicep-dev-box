@@ -22,8 +22,8 @@ try {
     $null = Set-AzContext -SubscriptionId $SubscriptionId
 }
 catch {
-    Write-Warning "Failed to switch subscription"
-    Write-Verbose $_.Exception.Message
+    Write-Warning "Failed to switch subscription `nMESSAGE: $($_.Exception.Message)"
+
     return
 }
 
@@ -36,7 +36,6 @@ try {
         -TemplateParameterFile "$ConfigFile"
 }
 catch {
-    Write-Warning "Failed to deploy resources"
-    Write-Verbose $_.Exception.Message
+    Write-Warning "Failed to deploy resources `nMESSAGE: $($_.Exception.Message)"
     return
 }
