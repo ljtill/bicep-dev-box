@@ -25,9 +25,9 @@ jobs:
           name=$(echo $RANDOM | base64 | head -c 8 | tr -dc '[:alpha:]' | tr '[:upper:]' '[:lower:]'; echo)
           contents="$(cat ./src/configs/main.json)"
           contents="$(echo $contents | jq '.parameters.config.value.network.resourceGroup.name = "Network-Bash"')"
-          contents="$(echo $contents | jq '.parameters.config.value.network.resources.name = "${name}"')"
+          contents="$(echo $contents | jq '.parameters.config.value.network.resources.name = "'$name'"')"
           contents="$(echo $contents | jq '.parameters.config.value.devbox.resourceGroup.name = "DevBox-Bash"')"
-          contents="$(echo $contents | jq '.parameters.config.value.devbox.resources.name = "${name}"')"
+          contents="$(echo $contents | jq '.parameters.config.value.devbox.resources.name = "'$name'"')"
           echo -E "${contents}" > ./src/configs/main.json
 
       - name: Login
