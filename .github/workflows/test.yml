@@ -28,6 +28,7 @@ jobs:
           contents="$(echo $contents | jq '.parameters.config.value.network.resources.name = "'$name'"')"
           contents="$(echo $contents | jq '.parameters.config.value.devbox.resourceGroup.name = "DevBox-Bash"')"
           contents="$(echo $contents | jq '.parameters.config.value.devbox.resources.name = "'$name'"')"
+          contents="$(echo $contents | jq '.parameters.config.value.network.resources.properties.interface = "Interface-Bash"')"
           echo -E "${contents}" > ./src/configs/main.json
 
       - name: Login
@@ -63,6 +64,7 @@ jobs:
           $content.parameters.config.value.network.resources.name = "$name"
           $content.parameters.config.value.devbox.resourceGroup.name = "DevBox-Pwsh"
           $content.parameters.config.value.devbox.resources.name = "$name"
+          $content.parameters.config.value.network.resources.properties.interface = "Interface-Pwsh"
           $content | ConvertTo-Json -Depth 25 | Out-File "./src/configs/main.json"
 
       - name: Login
