@@ -15,8 +15,8 @@ param (
 
 Write-Information "=> Starting deletion process..."
 
-Write-Information "==> Switching subscriptions..."
 try {
+    Write-Information "==> Switching subscriptions..."
     $null = Set-AzContext -SubscriptionId $SubscriptionId
 }
 catch {
@@ -24,12 +24,12 @@ catch {
     exit 1
 }
 
-Write-Information "==> Parsing config file..."
 try {
+    Write-Information "==> Parsing config file..."
     $config = (Get-Content -Path $ConfigFile | ConvertFrom-Json).parameters.config.value
 }
 catch {
-    Write-Warning "Failed to load config file `nMESSAGE: $($_.Exception.Message)"
+    Write-Warning "Failed to parse config data `nMESSAGE: $($_.Exception.Message)"
     exit 1
 }
 
@@ -42,20 +42,15 @@ try {
     }
 
     if ($env:CI -eq "true") {
+        Write-Information "==> Skipping resource deletion..."
+    }
+    else {
         Write-Information "==> Deleting devbox resources..."
-        Remove-AzResourceGroup -Name $config.devbox.resourceGroup.name -Force -Confirm:$false
-    }
+        Remove-AzResourceGroup -Name $config.devbox.resourceGroup.name
 
-    Write-Information "==> Deleting devbox resources..."
-    Remove-AzResourceGroup -Name $config.devbox.resourceGroup.name
-
-    if ($env:CI -eq "true") {
         Write-Information "==> Deleting network resources..."
-        Remove-AzResourceGroup -Name $config.network.resourceGroup.name -Force -Confirm:$false
+        Remove-AzResourceGroup -Name $config.network.resourceGroup.name
     }
-
-    Write-Information "==> Deleting network resources..."
-    Remove-AzResourceGroup -Name $config.network.resourceGroup.name
 }
 catch {
     Write-Warning "Failed to delete resources `nMESSAGE: $($_.Exception.Message)"

@@ -12,9 +12,8 @@ done
 
 echo "=> Starting deployment process..."
 
-# TODO: Add script root invocation
 # TODO: Add role assignment
-# TODO: Continous integration handler
+# TODO: Add script root invocation
 
 if [ -z "$subscription_id" ]; then
     echo -e "${RED}Missing script argument (-s subscriptionId)"
@@ -33,12 +32,21 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "==> Deploying resources..."
-az deployment sub create \
-    --name "Microsoft.Deployment.Bash" \
-    --location "uksouth" \
-    --template-file "./src/main.bicep" \
-    --parameters $config_file
+if [ -n "$CI" ]; then
+    echo "==> Validating resources..."
+    az deployment sub what-if \
+        --name "Microsoft.Deployment.Bash" \
+        --location "uksouth" \
+        --template-file "./src/main.bicep" \
+        --parameters $config_file
+else
+    echo "==> Deploying resources..."
+    az deployment sub create \
+        --name "Microsoft.Deployment.Bash" \
+        --location "uksouth" \
+        --template-file "./src/main.bicep" \
+        --parameters $config_file
+fi
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to deploy resources"
