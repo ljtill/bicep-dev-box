@@ -25,11 +25,11 @@ jobs:
         run: |
           name=$(echo $RANDOM | base64 | head -c 8 | tr -dc '[:alpha:]' | tr '[:upper:]' '[:lower:]'; echo)
           contents="$(cat ./src/configs/main.json)"
-          contents="$(echo $contents | jq '.parameters.config.value.network.resourceGroup.name = "'Network-$GITHUB_RUN_ID-$GITHUB-JOB'"')"
+          contents="$(echo $contents | jq '.parameters.config.value.network.resourceGroup.name = "'Network-$GITHUB_RUN_ID-$GITHUB_JOB'"')"
           contents="$(echo $contents | jq '.parameters.config.value.network.resources.name = "'$name'"')"
-          contents="$(echo $contents | jq '.parameters.config.value.devbox.resourceGroup.name = "'DevBox-$GITHUB_RUN_ID-$GITHUB-JOB'"')"
+          contents="$(echo $contents | jq '.parameters.config.value.devbox.resourceGroup.name = "'DevBox-$GITHUB_RUN_ID-$GITHUB_JOB'"')"
           contents="$(echo $contents | jq '.parameters.config.value.devbox.resources.name = "'$name'"')"
-          contents="$(echo $contents | jq '.parameters.config.value.network.resources.properties.interface = "'Interface-$GITHUB_RUN_ID-$GITHUB-JOB'"')"
+          contents="$(echo $contents | jq '.parameters.config.value.network.resources.properties.interface = "'Interface-$GITHUB_RUN_ID-$GITHUB_JOB'"')"
           echo -E "${contents}" > ./src/configs/main.json
 
       - name: Login
