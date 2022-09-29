@@ -30,7 +30,7 @@ catch {
 Write-Information "==> Deploying resources..."
 try {
     New-AzSubscriptionDeployment `
-        -Name "Microsoft.Deployment" `
+        -Name "Microsoft.Deployment.PowerShell" `
         -Location "uksouth" `
         -TemplateFile ((Split-Path $PSScriptRoot) + "/src/main.bicep") `
         -TemplateParameterFile "$ConfigFile"
