@@ -21,7 +21,7 @@ try {
 }
 catch {
     Write-Warning "Failed to switch subscriptions `nMESSAGE: $($_.Exception.Message)"
-    return
+    exit 1
 }
 
 Write-Information "==> Parsing config file..."
@@ -30,7 +30,7 @@ try {
 }
 catch {
     Write-Warning "Failed to load config file `nMESSAGE: $($_.Exception.Message)"
-    return
+    exit 1
 }
 
 try {
@@ -59,5 +59,5 @@ try {
 }
 catch {
     Write-Warning "Failed to delete resources `nMESSAGE: $($_.Exception.Message)"
-    return
+    exit 1
 }

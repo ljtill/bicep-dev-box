@@ -23,8 +23,7 @@ try {
 }
 catch {
     Write-Warning "Failed to switch subscription `nMESSAGE: $($_.Exception.Message)"
-
-    return
+    exit 1
 }
 
 Write-Information "==> Deploying resources..."
@@ -37,5 +36,5 @@ try {
 }
 catch {
     Write-Warning "Failed to deploy resources `nMESSAGE: $($_.Exception.Message)"
-    return
+    exit 1
 }
