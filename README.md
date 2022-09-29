@@ -1,14 +1,37 @@
 # Dev Box
 
-Microsoft Dev Box is an Azure service that gives developers access to ready-to-code, project-specific dev boxes that are preconfigured and centrally managed. Support hybrid dev teams of any size with high-performance, cloud-based workstations, and let developers focus on writing code by streamlining access to the tools they need.
+Microsoft Dev Box is an Azure service that gives developers access to
+ready-to-code, project-specific dev boxes that are preconfigured and centrally
+managed. Support hybrid dev teams of any size with high-performance, cloud-based
+workstations, and let developers focus on writing code by streamlining access to
+the tools they need.
 
-This repository contains the infra-as-code components to quickly scaffold a new Microsoft Dev Box environment.
+This repository contains the infra-as-code components to quickly scaffold a new
+Microsoft Dev Box environment.
 
 _Please note these artifacts are under development and subject to change._
 
 ---
 
 ### Getting Started
+
+#### Using locally with PowerShell
+
+```powershell
+./eng/deploy.ps1 -SubscriptionId "{GUID}"
+./eng/delete.ps1 -SubscriptionId "{GUID}"
+```
+
+#### Using locally with Bash
+
+```bash
+./eng/deploy.sh -SubscriptionId "{GUID}"
+./eng/deploy.sh -SubscriptionId "{GUID}"
+```
+
+#### Using with GitHub Actions
+
+The workflows are configured to authenticate with federated credentials mechanism.
 
 Azure Active Directory - Application
 
@@ -39,12 +62,20 @@ Azure Deployment
 
 - Update the `src/configs/main.json` file with environment specifics
 
-Azure Resource Manager - Role Assignment - Post Deployment
+### Connection
+
+After the deployment is complete, to provide the ability to create and connect to desktops following steps are required.
+
+Azure Resource Manager
 
 - Navigate to the DevCenter Project resource in the Azure Portal
 - Select 'Access control (IAM)' and 'Add' - 'Add role assignment'
 - Select Role 'DevCenter Dev Box User' and select Members
-- Provide the 'Name' of the User / Groups for assignment
+- Provide the 'Name' of the User / Groups to allow access to the Dev Box portal
+
+Browser
+
+- Navigate to the Dev Box [portal](https://devbox.microsoft.com)
 
 ---
 
@@ -63,6 +94,9 @@ Azure Resource Manager - Role Assignment - Post Deployment
 
 ### Links
 
-- [Microsoft Dev Box](https://docs.microsoft.com/azure/dev-box)
+- [Microsoft Dev Box](https://learn.microsoft.com/azure/dev-box/overview-what-is-microsoft-dev-box)
+  - [Key Concepts](https://learn.microsoft.com/azure/dev-box/concept-dev-box-concepts)
+  - [How-to Guides](https://learn.microsoft.com/azure/dev-box/how-to-project-admin)
+  - [Connect](https://learn.microsoft.com/azure/dev-box/tutorial-connect-to-dev-box-with-remote-desktop-app)
 - [Azure Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep)
 - [OpenID Connect](https://docs.github.com/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure)
