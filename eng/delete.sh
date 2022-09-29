@@ -19,10 +19,6 @@ if [ -z "$subscription_id" ]; then
     exit 1
 fi
 
-if [ -z "$config_file" ]; then
-    config_file="./src/configs/main.json"
-fi
-
 echo "==> Switching subcription..."
 az account set --subscription "$subscription_id"
 
@@ -31,30 +27,26 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "==> Parsing config file..."
-config_data=$(cat $config_file | jq -r '.parameters.config.value')
-devbox_resource=$(echo $config_data | jq -r '.devbox.resourceGroup.name')
-network_resource=$(echo $config_data | jq -r '.network.resourceGroup.name')
-
-if [ -n "$CI" ]; then
-    echo "==> Deleting devbox resources..."
-    az group delete --name $devbox_resource --yes
-else
-    echo "==> Deleting devbox resources..."
-    az group delete --name $devbox_resource
+if [ -z "$config_file" ]; then
+    config_file="./src/configs/main.json"
 fi
 
+echo "==> Parsing config file..."
+config_data=$(cat $config_file | jq -r '.parameters.config.value')
+
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to delete devbox resources"
+    echo -e "${RED}Failed to parse config file"
     exit 1
 fi
 
 if [ -n "$CI" ]; then
-    echo "==> Deleting network resources..."
-    az group delete --name $network_resource --yes
+    echo "==> Skipping resource deletion..."
 else
+    echo "==> Deleting devbox resources..."
+    az group delete --name $(echo $config_data | jq -r '.devbox.resourceGroup.name')
+
     echo "==> Deleting network resources..."
-    az group delete --name $network_resource
+    az group delete --name $(echo $config_data | jq -r '.network.resourceGroup.name')
 fi
 
 if [ $? -ne 0 ]; then

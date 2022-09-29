@@ -17,8 +17,8 @@ Write-Information "=> Starting deployment process..."
 
 # TODO: Add role assignment
 
-Write-Information "==> Switching subscriptions..."
 try {
+    Write-Information "==> Switching subscriptions..."
     $null = Set-AzContext -SubscriptionId $SubscriptionId
 }
 catch {
@@ -26,13 +26,24 @@ catch {
     exit 1
 }
 
-Write-Information "==> Deploying resources..."
 try {
-    New-AzSubscriptionDeployment `
-        -Name "Microsoft.Deployment.PowerShell" `
-        -Location "uksouth" `
-        -TemplateFile ((Split-Path $PSScriptRoot) + "/src/main.bicep") `
-        -TemplateParameterFile "$ConfigFile"
+    if ($env:CI -eq "true") {
+        Write-Information "==> Validating resources..."
+        New-AzSubscriptionDeployment `
+            -Name "Microsoft.Deployment.PowerShell" `
+            -Location "uksouth" `
+            -TemplateFile ((Split-Path $PSScriptRoot) + "/src/main.bicep") `
+            -TemplateParameterFile "$ConfigFile" `
+            -WhatIf
+    }
+    else {
+        Write-Information "==> Deploying resources..."
+        New-AzSubscriptionDeployment `
+            -Name "Microsoft.Deployment.PowerShell" `
+            -Location "uksouth" `
+            -TemplateFile ((Split-Path $PSScriptRoot) + "/src/main.bicep") `
+            -TemplateParameterFile "$ConfigFile"
+    }
 }
 catch {
     Write-Warning "Failed to deploy resources `nMESSAGE: $($_.Exception.Message)"
