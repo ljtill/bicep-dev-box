@@ -22,12 +22,16 @@ _Please note these artifacts are under development and subject to change._
 ./eng/delete.ps1 -SubscriptionId "{GUID}"
 ```
 
+To override the default config file, use the `-ConfigFile {FilePath}` parameter.
+
 #### Using locally with Bash
 
 ```bash
-./eng/deploy.sh -SubscriptionId "{GUID}"
-./eng/deploy.sh -SubscriptionId "{GUID}"
+./eng/deploy.sh -s "{GUID}"
+./eng/deploy.sh -s "{GUID}"
 ```
+
+To override the default config file, use the `-c {FilePath}` parameter.
 
 #### Using with GitHub Actions
 
@@ -64,7 +68,8 @@ Azure Deployment
 
 ### Connection
 
-After the deployment is complete, to provide the ability to create and connect to desktops following steps are required.
+After the deployment is complete, to provide the ability to create and
+connect to desktops following steps are required.
 
 Azure Resource Manager
 
