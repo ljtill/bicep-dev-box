@@ -29,9 +29,9 @@ module network './modules/network/main.bicep' = {
   ]
 }
 
-// Dev Box
-module devbox 'modules/devbox/main.bicep' = {
-  name: 'Microsoft.DevBox'
+// DevCenter
+module devcenter 'modules/devcenter/main.bicep' = {
+  name: 'Microsoft.DevCenter'
   scope: resourceGroup(config.devbox.resourceGroup.name)
   params: {
     config: config
