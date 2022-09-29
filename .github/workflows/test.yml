@@ -24,10 +24,11 @@ jobs:
         run: |
           name=$(echo $RANDOM | base64 | head -c 8 | tr -dc '[:alpha:]' | tr '[:upper:]' '[:lower:]'; echo)
           contents="$(cat ./src/configs/main.json)"
-          contents="$(echo $contents | jq '.parameters.config.value.network.resourceGroup.name = "Network-Bash"')"
+          contents="$(echo $contents | jq '.parameters.config.value.network.resourceGroup.name = "'Network-$GITHUB_RUN_ID-$GITHUB-JOB'"')"
           contents="$(echo $contents | jq '.parameters.config.value.network.resources.name = "'$name'"')"
-          contents="$(echo $contents | jq '.parameters.config.value.devbox.resourceGroup.name = "DevBox-Bash"')"
+          contents="$(echo $contents | jq '.parameters.config.value.devbox.resourceGroup.name = "'DevBox-$GITHUB_RUN_ID-$GITHUB-JOB'"')"
           contents="$(echo $contents | jq '.parameters.config.value.devbox.resources.name = "'$name'"')"
+          contents="$(echo $contents | jq '.parameters.config.value.network.resources.properties.interface = "'Interface-$GITHUB_RUN_ID-$GITHUB-JOB'"')"
           echo -E "${contents}" > ./src/configs/main.json
 
       - name: Login
@@ -59,15 +60,17 @@ jobs:
         run: |
           $name = -join ((97..122) | Get-Random -Count 8 | % {[char]$_})
           $content = Get-Content "./src/configs/main.json" | ConvertFrom-Json -Depth 25
-          $content.parameters.config.value.network.resourceGroup.name = "Network-Pwsh"
+          $content.parameters.config.value.network.resourceGroup.name = "Network-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
           $content.parameters.config.value.network.resources.name = "$name"
-          $content.parameters.config.value.devbox.resourceGroup.name = "DevBox-Pwsh"
+          $content.parameters.config.value.devbox.resourceGroup.name = "DevBox-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
           $content.parameters.config.value.devbox.resources.name = "$name"
+          $content.parameters.config.value.network.resources.properties.interface = "Interface-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
           $content | ConvertTo-Json -Depth 25 | Out-File "./src/configs/main.json"
 
       - name: Login
         uses: azure/login@v1
         with:
+          enable-AzPSSession: true
           client-id: ${{ secrets.AZURE_CLIENT_ID}}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}

@@ -30,7 +30,7 @@ resource networkConnection 'Microsoft.DevCenter/networkconnections@2022-09-01-pr
   properties: {
     domainJoinType: 'AzureADJoin'
     subnetId: virtualNetwork.properties.subnets[0].id
-    networkingResourceGroupName: 'Interfaces'
+    networkingResourceGroupName: config.network.resources.properties.interface
   }
   tags: config.devbox.resources.tags
 }
