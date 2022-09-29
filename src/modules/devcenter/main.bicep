@@ -16,12 +16,12 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-
 }
 
 // Compute Gallery
-// resource computeGallery 'Microsoft.Compute/galleries@2022-01-03' = {
-//   name: config.devbox.resources.name
-//   location: config.location
-//   properties: {}
-//   tags: config.network.resources.tags
-// }
+resource computeGallery 'Microsoft.Compute/galleries@2022-01-03' = {
+  name: config.devbox.resources.name
+  location: config.location
+  properties: {}
+  tags: config.devbox.resources.tags
+}
 
 // Network Connection
 resource networkConnection 'Microsoft.DevCenter/networkconnections@2022-09-01-preview' = {
@@ -109,6 +109,7 @@ resource project 'Microsoft.DevCenter/projects@2022-09-01-preview' = {
   dependsOn: [
     definitions
   ]
+  tags: config.devbox.resources.tags
 }
 
 // ---------
