@@ -64,8 +64,6 @@ GitHub Actions - Secrets
 
 ### Connection
 
-After the deployment is complete, to provide the ability to create and connect to desktops following steps are required
-
 Azure Resource Manager
 
 - Navigate to the DevCenter Project resource in the Azure Portal
