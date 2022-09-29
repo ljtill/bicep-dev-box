@@ -36,16 +36,26 @@ config_data=$(cat $config_file | jq -r '.parameters.config.value')
 devbox_resource=$(echo $config_data | jq -r '.devbox.resourceGroup.name')
 network_resource=$(echo $config_data | jq -r '.network.resourceGroup.name')
 
-echo "==> Deleting devbox resources..."
-az group delete --name $devbox_resource
+if [ -n "$CI" ]; then
+    echo "==> Deleting devbox resources..."
+    az group delete --name $devbox_resource --yes
+else
+    echo "==> Deleting devbox resources..."
+    az group delete --name $devbox_resource
+fi
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to delete devbox resources"
     exit 1
 fi
 
-echo "==> Deleting network resources..."
-az group delete --name $network_resource
+if [ -n "$CI" ]; then
+    echo "==> Deleting network resources..."
+    az group delete --name $network_resource --yes
+else
+    echo "==> Deleting network resources..."
+    az group delete --name $network_resource
+fi
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to delete network resources"
