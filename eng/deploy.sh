@@ -35,7 +35,7 @@ fi
 
 echo "==> Deploying resources..."
 az deployment sub create \
-    --name "Microsoft.Deployment" \
+    --name "Microsoft.Deployment.Bash" \
     --location "uksouth" \
     --template-file "./src/main.bicep" \
     --parameters $config_file

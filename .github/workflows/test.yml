@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "eng/**"
       - "src/**"
 
 permissions:
@@ -25,11 +24,11 @@ jobs:
         run: |
           name=$(echo $RANDOM | base64 | head -c 8 | tr -dc '[:alpha:]' | tr '[:upper:]' '[:lower:]'; echo)
           contents="$(cat ./src/configs/main.json)"
-          contents="$(echo $contents | jq '.parameters.config.value.network.resourceGroup.name = "'network-$GITHUB_RUN_ID-$GITHUB_JOB'"')"
+          contents="$(echo $contents | jq '.parameters.config.value.network.resourceGroup.name = "'network-$GITHUB_RUN_ID-bash'"')"
           contents="$(echo $contents | jq '.parameters.config.value.network.resources.name = "'$name'"')"
-          contents="$(echo $contents | jq '.parameters.config.value.devbox.resourceGroup.name = "'devbox-$GITHUB_RUN_ID-$GITHUB_JOB'"')"
+          contents="$(echo $contents | jq '.parameters.config.value.devbox.resourceGroup.name = "'devbox-$GITHUB_RUN_ID-bash'"')"
           contents="$(echo $contents | jq '.parameters.config.value.devbox.resources.name = "'$name'"')"
-          contents="$(echo $contents | jq '.parameters.config.value.network.resources.properties.interface = "'interface-$GITHUB_RUN_ID-$GITHUB_JOB'"')"
+          contents="$(echo $contents | jq '.parameters.config.value.network.resources.properties.interface = "'interface-$GITHUB_RUN_ID-bash'"')"
           echo -E "${contents}" > ./src/configs/main.json
 
       - name: Login
@@ -61,11 +60,11 @@ jobs:
         run: |
           $name = -join ((97..122) | Get-Random -Count 8 | % {[char]$_})
           $content = Get-Content "./src/configs/main.json" | ConvertFrom-Json -Depth 25
-          $content.parameters.config.value.network.resourceGroup.name = "network-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
+          $content.parameters.config.value.network.resourceGroup.name = "network-$env:GITHUB_RUN_ID-powershell"
           $content.parameters.config.value.network.resources.name = "$name"
-          $content.parameters.config.value.devbox.resourceGroup.name = "devbox-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
+          $content.parameters.config.value.devbox.resourceGroup.name = "devbox-$env:GITHUB_RUN_ID-powershell"
           $content.parameters.config.value.devbox.resources.name = "$name"
-          $content.parameters.config.value.network.resources.properties.interface = "interface-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
+          $content.parameters.config.value.network.resources.properties.interface = "interface-$env:GITHUB_RUN_ID-powershell"
           $content | ConvertTo-Json -Depth 25 | Out-File "./src/configs/main.json"
 
       - name: Login
