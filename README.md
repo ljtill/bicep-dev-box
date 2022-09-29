@@ -15,6 +15,9 @@ _Please note these artifacts are under development and subject to change._
 
 ### Getting Started
 
+Before deploying the Dev Box resources, the configuration file needs to be updated.
+Edit the `src/configs/main.json` with environment specific details.
+
 #### Using locally with PowerShell
 
 ```powershell
@@ -34,8 +37,6 @@ To override the default config file, use the `-ConfigFile {FilePath}` parameter.
 To override the default config file, use the `-c {FilePath}` parameter.
 
 #### Using with GitHub Actions
-
-The workflows are configured to authenticate with federated credentials mechanism.
 
 Azure Active Directory - Application
 
@@ -61,10 +62,6 @@ GitHub Actions - Secrets
   - AZURE_TENANT_ID
   - AZURE_SUBSCRIPTION_ID
   - AZURE_CLIENT_ID
-
-Azure Deployment
-
-- Update the `src/configs/main.json` file with environment specifics
 
 ### Connection
 
