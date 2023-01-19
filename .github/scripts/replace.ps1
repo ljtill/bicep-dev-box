@@ -11,14 +11,14 @@ $content.parameters.networkSettings.value.resources.securityGroup.name = "$name"
 
 # DevCenter
 
-$content.parameters.config.value.devbox.resourceGroup.name = "devbox-$env:GITHUB_RUN_ID-powershell"
-$content.parameters.config.value.devbox.resourceGroup.location = "uksouth"
-$content.parameters.config.value.devbox.resources.managedIdentity.name = "$name"
-$content.parameters.config.value.devbox.resources.computeGallery.name = "$name"
-$content.parameters.config.value.devbox.resources.networkConnection.name = "$name"
-$content.parameters.config.value.devbox.resources.devcenter.name = "$name"
-$content.parameters.config.value.devbox.resources.projects.name = "$name"
-$content.parameters.config.value.devbox.resources.projects.description = "Deployed by GitHub Actions"
-$content.parameters.config.value.devbox.resources.projects.pools[0].name = "$name"
+$content.parameters.devcenterSettings.value.resourceGroup.name = "devbox-$env:GITHUB_RUN_ID-powershell"
+$content.parameters.devcenterSettings.value.resourceGroup.location = "uksouth"
+$content.parameters.devcenterSettings.value.resources.managedIdentity.name = "$name"
+$content.parameters.devcenterSettings.value.resources.computeGallery.name = "$name"
+$content.parameters.devcenterSettings.value.resources.networkConnection.name = "$name"
+$content.parameters.devcenterSettings.value.resources.devcenter.name = "$name"
+$content.parameters.devcenterSettings.value.resources.projects.name = "$name"
+$content.parameters.devcenterSettings.value.resources.projects.description = "Deployed by GitHub Actions"
+$content.parameters.devcenterSettings.value.resources.projects.pools[0].name = "$name"
 
 $content | ConvertTo-Json -Depth 25 | Out-File "./src/parameters/main.json"
