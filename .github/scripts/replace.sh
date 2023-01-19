@@ -13,7 +13,7 @@ contents="$(echo $contents | jq '.parameters.networkSettings.value.resources.sec
 # DevCenter
 
 contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resourceGroup.name = "'devbox-$GITHUB_RUN_ID-bash'"')"
-contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resourceGroup.location = "'uksouth'"')"
+contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resourceGroup.location = "uksouth"')"
 contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.managedIdentity.name = "'$name'"')"
 contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.computeGallery.name = "'$name'"')"
 contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.networkConnection.name = "'$name'"')"
