@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "networkSettings": {
+            "value": {
+                "resourceGroup": {
+                    "name": "",
+                    "location": ""
+                },
+                "resources": {
+                    "virtualNetwork": {
+                        "name": "",
+                        "addressPrefix": "10.0.0.0/16",
+                        "subnet": {
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    },
+                    "securityGroup": {
+                        "name": ""
+                    }
+                },
+                "tags": {}
+            }
+        },
+        "devcenterSettings": {
+            "value": {
+                "resourceGroup": {
+                    "name": "",
+                    "location": ""
+                },
+                "resources": {
+                    "managedIdentity": {
+                        "name": ""
+                    },
+                    "computeGallery": {
+                        "name": ""
+                    },
+                    "networkConnection": {
+                        "name": ""
+                    },
+                    "devcenter": {
+                        "name": ""
+                    },
+                    "definitions": [
+                        {
+                            "name": "base-small",
+                            "image": "win-11-ent-os-opt",
+                            "compute": "4-vcpu-16gb-mem",
+                            "storage": "256gb-ssd"
+                        },
+                        {
+                            "name": "base-medium",
+                            "image": "win-11-ent-os-opt",
+                            "compute": "8-vcpu-32gb-mem",
+                            "storage": "256gb-ssd"
+                        },
+                        {
+                            "name": "apps-small",
+                            "image": "win-11-ent-m365-apps",
+                            "compute": "4-vcpu-16gb-mem",
+                            "storage": "256gb-ssd"
+                        },
+                        {
+                            "name": "apps-medium",
+                            "image": "win-11-ent-m365-apps",
+                            "compute": "8-vcpu-32gb-mem",
+                            "storage": "256gb-ssd"
+                        }
+                    ],
+                    "projects": {
+                        "name": "",
+                        "description": "",
+                        "pools": [
+                            {
+                                "name": "",
+                                "definition": "base-small",
+                                "administrator": "Enabled"
+                            }
+                        ]
+                    }
+                },
+                "tags": {}
+            }
+        }
+    }
+}

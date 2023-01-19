@@ -6,7 +6,7 @@ while getopts s:c: option
 do
     case "${option}" in
         s) subscription_id=${OPTARG};;
-        c) config_file=${OPTARG};;
+        p) parameter_file=${OPTARG};;
     esac
 done
 
@@ -20,8 +20,8 @@ if [ -z "$subscription_id" ]; then
     exit 1
 fi
 
-if [ -z "$config_file" ]; then
-    config_file="./src/configs/main.json"
+if [ -z "$parameter_file" ]; then
+    parameter_file="./src/parameters/main.json"
 fi
 
 echo "==> Switching subscription..."
@@ -38,14 +38,14 @@ if [ -n "$CI" ]; then
         --name "Microsoft.Deployment.Bash" \
         --location "uksouth" \
         --template-file "./src/main.bicep" \
-        --parameters $config_file
+        --parameters $parameter_file
 else
     echo "==> Deploying resources..."
     az deployment sub create \
         --name "Microsoft.Deployment.Bash" \
         --location "uksouth" \
         --template-file "./src/main.bicep" \
-        --parameters $config_file
+        --parameters $parameter_file
 fi
 
 if [ $? -ne 0 ]; then
