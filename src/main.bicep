@@ -13,16 +13,17 @@ module resources './modules/resources/main.bicep' = {
   name: 'Microsoft.Resources'
   scope: subscription()
   params: {
-    config: config
+    networkSettings: networkSettings
+    devcenterSettings: devcenterSettings
   }
 }
 
 // Network
 module network './modules/network/main.bicep' = {
   name: 'Microsoft.Network'
-  scope: resourceGroup(config.network.resourceGroup.name)
+  scope: resourceGroup(networkSettings.resourceGroup.name)
   params: {
-    config: config
+    networkSettings: networkSettings
   }
   dependsOn: [
     resources
@@ -32,9 +33,10 @@ module network './modules/network/main.bicep' = {
 // DevCenter
 module devcenter 'modules/devcenter/main.bicep' = {
   name: 'Microsoft.DevCenter'
-  scope: resourceGroup(config.devbox.resourceGroup.name)
+  scope: resourceGroup(devcenterSettings.resourceGroup.name)
   params: {
-    config: config
+    networkSettings: networkSettings
+    devcenterSettings: devcenterSettings
   }
   dependsOn: [
     resources
@@ -46,4 +48,5 @@ module devcenter 'modules/devcenter/main.bicep' = {
 // Parameters
 // ----------
 
-param config object = {}
+param networkSettings object
+param devcenterSettings object

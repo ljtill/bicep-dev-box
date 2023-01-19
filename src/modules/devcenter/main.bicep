@@ -10,35 +10,35 @@ targetScope = 'resourceGroup'
 
 // Managed Identity
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' = {
-  name: config.devbox.resources.name
-  location: config.location
-  tags: config.devbox.resources.tags
+  name: devcenterSettings.resources.managedIdentity.name
+  location: devcenterSettings.resourceGroup.location
+  tags: devcenterSettings.tags
 }
 
 // Compute Gallery
 resource computeGallery 'Microsoft.Compute/galleries@2022-01-03' = {
-  name: config.devbox.resources.name
-  location: config.location
+  name: devcenterSettings.resources.computeGallery.name
+  location: devcenterSettings.resourceGroup.location
   properties: {}
-  tags: config.devbox.resources.tags
+  tags: devcenterSettings.tags
 }
 
 // Network Connection
 resource networkConnection 'Microsoft.DevCenter/networkconnections@2022-09-01-preview' = {
-  name: config.devbox.resources.name
-  location: config.location
+  name: devcenterSettings.resources.networkConnection.name
+  location: devcenterSettings.resourceGroup.location
   properties: {
     domainJoinType: 'AzureADJoin'
     subnetId: virtualNetwork.properties.subnets[0].id
-    networkingResourceGroupName: config.network.resources.properties.interface
+    networkingResourceGroupName: 'Interface' // TMP
   }
-  tags: config.devbox.resources.tags
+  tags: devcenterSettings.tags
 }
 
 // DevCenter
-resource devCenter 'Microsoft.DevCenter/devcenters@2022-09-01-preview' = {
-  name: config.devbox.resources.name
-  location: config.location
+resource devcenter 'Microsoft.DevCenter/devcenters@2022-09-01-preview' = {
+  name: devcenterSettings.resources.devcenter.name
+  location: devcenterSettings.resourceGroup.location
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
@@ -46,12 +46,12 @@ resource devCenter 'Microsoft.DevCenter/devcenters@2022-09-01-preview' = {
     }
   }
   properties: {}
-  tags: config.devbox.resources.tags
+  tags: devcenterSettings.tags
 }
 
 // DevCenter Attached Networks
 resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2022-09-01-preview' = {
-  parent: devCenter
+  parent: devcenter
   name: 'default'
   properties: {
     networkConnectionId: networkConnection.id
@@ -69,13 +69,13 @@ resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2022-
 // }
 
 // DevCenter Definitions
-resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-09-01-preview' = [for definition in config.devbox.resources.properties.definitions: {
-  parent: devCenter
+resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-09-01-preview' = [for definition in devcenterSettings.resources.definitions: {
+  parent: devcenter
   name: definition.name
-  location: config.location
+  location: devcenterSettings.resourceGroup.location
   properties: {
     imageReference: {
-      id: '${devCenter.id}/galleries/default/images/${image[definition.image]}'
+      id: '${devcenter.id}/galleries/default/images/${image[definition.image]}'
     }
     sku: {
       name: compute[definition.compute]
@@ -90,15 +90,15 @@ resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-09-0
 // DevCenter Project
 // TODO: Support multiple projects
 resource project 'Microsoft.DevCenter/projects@2022-09-01-preview' = {
-  name: config.devbox.resources.properties.project.name
-  location: config.location
+  name: devcenterSettings.resources.projects.name
+  location: devcenterSettings.resourceGroup.location
   properties: {
-    devCenterId: devCenter.id
-    description: config.devbox.resources.properties.project.description
+    devCenterId: devcenter.id
+    description: devcenterSettings.resources.projects.description
   }
-  resource pools 'pools' = [for pool in config.devbox.resources.properties.project.pools: {
+  resource pools 'pools' = [for pool in devcenterSettings.resources.projects.pools: {
     name: pool.name
-    location: config.location
+    location: devcenterSettings.resourceGroup.location
     properties: {
       devBoxDefinitionName: pool.definition
       networkConnectionName: 'default'
@@ -109,7 +109,7 @@ resource project 'Microsoft.DevCenter/projects@2022-09-01-preview' = {
   dependsOn: [
     definitions
   ]
-  tags: config.devbox.resources.tags
+  tags: devcenterSettings.tags
 }
 
 // ---------
@@ -117,8 +117,8 @@ resource project 'Microsoft.DevCenter/projects@2022-09-01-preview' = {
 // ---------
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-01-01' existing = {
-  name: config.network.resources.name
-  scope: resourceGroup(config.network.resourceGroup.name)
+  name: networkSettings.resources.virtualNetwork.name
+  scope: resourceGroup(networkSettings.resourceGroup.name)
 }
 
 // ---------
@@ -145,4 +145,5 @@ var storage = {
 // Parameters
 // ----------
 
-param config object
+param networkSettings object
+param devcenterSettings object

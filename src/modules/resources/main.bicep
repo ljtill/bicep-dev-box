@@ -9,21 +9,22 @@ targetScope = 'subscription'
 // ---------
 
 resource network 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: config.network.resourceGroup.name
-  location: config.location
+  name: networkSettings.resourceGroup.name
+  location: networkSettings.resourceGroup.location
   properties: {}
-  tags: config.network.resources.tags
+  tags: networkSettings.tags
 }
 
-resource devbox 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: config.devbox.resourceGroup.name
-  location: config.location
+resource devcenter 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: devcenterSettings.resourceGroup.name
+  location: devcenterSettings.resourceGroup.location
   properties: {}
-  tags: config.devbox.resources.tags
+  tags: devcenterSettings.tags
 }
 
 // ----------
 // Parameters
 // ----------
 
-param config object
+param networkSettings object
+param devcenterSettings object

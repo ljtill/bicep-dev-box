@@ -10,19 +10,19 @@ targetScope = 'resourceGroup'
 
 // Virtual Network
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-01-01' = {
-  name: config.network.resources.name
-  location: config.location
+  name: networkSettings.resources.virtualNetwork.name
+  location: networkSettings.resourceGroup.location
   properties: {
     addressSpace: {
       addressPrefixes: [
-        config.network.resources.properties.addressPrefix
+        networkSettings.resources.virtualNetwork.addressPrefix
       ]
     }
     subnets: [
       {
         name: 'default'
         properties: {
-          addressPrefix: config.network.resources.properties.subnet.addressPrefix
+          addressPrefix: networkSettings.resources.virtualNetwork.subnet.addressPrefix
           networkSecurityGroup: {
             id: securityGroup.id
           }
@@ -30,21 +30,21 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-01-01' = {
       }
     ]
   }
-  tags: config.network.resources.tags
+  tags: networkSettings.tags
 }
 
 // Security Group
 resource securityGroup 'Microsoft.Network/networkSecurityGroups@2022-01-01' = {
-  name: config.network.resources.name
-  location: config.location
+  name: networkSettings.resources.securityGroup.name
+  location: networkSettings.resourceGroup.location
   properties: {
     securityRules: []
   }
-  tags: config.network.resources.tags
+  tags: networkSettings.tags
 }
 
 // ----------
 // Parameters
 // ----------
 
-param config object
+param networkSettings object
