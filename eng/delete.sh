@@ -6,7 +6,7 @@ while getopts s:c: option
 do
     case "${option}" in
         s) subscription_id=${OPTARG};;
-        c) config_file=${OPTARG};;
+        p) parameter_file=${OPTARG};;
     esac
 done
 
@@ -27,26 +27,33 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-if [ -z "$config_file" ]; then
-    config_file="./src/configs/main.json"
+if [ -z "$parameter_file" ]; then
+    parameter_file="./src/parameters/main.json"
 fi
 
-echo "==> Parsing config file..."
-config_data=$(cat $config_file | jq -r '.parameters.config.value')
+echo "==> Parsing parameter file..."
+network_settings_data=$(cat $parameter_file | jq -r '.parameters.networkSettings.value')
 
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to parse config file"
+    echo -e "${RED}Failed to parse parameter file"
+    exit 1
+fi
+
+echo "==> Parsing parameter file..."
+devcenter_settings_data=$(cat $parameter_file | jq -r '.parameters.devcenterSettings.value')
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to parse parameter file"
     exit 1
 fi
 
 if [ -n "$CI" ]; then
     echo "==> Skipping resource deletion..."
 else
-    echo "==> Deleting devbox resources..."
-    az group delete --name $(echo $config_data | jq -r '.devbox.resourceGroup.name')
+    echo "==> Deleting devcenter resources..."
+    az group delete --name $(echo $devcenter_settings_data | jq -r '.resourceGroup.name')
 
     echo "==> Deleting network resources..."
-    az group delete --name $(echo $config_data | jq -r '.network.resourceGroup.name')
+    az group delete --name $(echo $network_settings_data | jq -r '.resourceGroup.name')
 fi
 
 if [ $? -ne 0 ]; then

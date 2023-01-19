@@ -7,7 +7,7 @@ param (
     $SubscriptionId,
 
     [Parameter(Mandatory = $false)]
-    $ConfigFile = ((Split-Path $PSScriptRoot) + "/src/configs/main.json"),
+    $ParameterFile = ((Split-Path $PSScriptRoot) + "/src/parameters/main.json"),
 
     $InformationPreference = 'Continue',
     $ErrorActionPreference = 'Stop'
@@ -16,20 +16,21 @@ param (
 Write-Information "=> Starting deletion process..."
 
 try {
-    Write-Information "==> Switching subscriptions..."
+    Write-Information "==> Switching subscription..."
     $null = Set-AzContext -SubscriptionId $SubscriptionId
 }
 catch {
-    Write-Warning "Failed to switch subscriptions `nMESSAGE: $($_.Exception.Message)"
+    Write-Warning "Failed to switch subscription `nMESSAGE: $($_.Exception.Message)"
     exit 1
 }
 
 try {
-    Write-Information "==> Parsing config file..."
-    $config = (Get-Content -Path $ConfigFile | ConvertFrom-Json).parameters.config.value
+    Write-Information "==> Parsing parameter file..."
+    $networkSettings = (Get-Content -Path $ParameterFile | ConvertFrom-Json).parameters.networkSettings.value
+    $devcenterSettings = (Get-Content -Path $ParameterFile | ConvertFrom-Json).parameters.devcenterSettings.value
 }
 catch {
-    Write-Warning "Failed to parse config data `nMESSAGE: $($_.Exception.Message)"
+    Write-Warning "Failed to parse parameter data `nMESSAGE: $($_.Exception.Message)"
     exit 1
 }
 
@@ -45,11 +46,11 @@ try {
         Write-Information "==> Skipping resource deletion..."
     }
     else {
-        Write-Information "==> Deleting devbox resources..."
-        Remove-AzResourceGroup -Name $config.devbox.resourceGroup.name
+        Write-Information "==> Deleting devcenter resources..."
+        Remove-AzResourceGroup -Name $devcenterSettings.resourceGroup.name
 
         Write-Information "==> Deleting network resources..."
-        Remove-AzResourceGroup -Name $config.network.resourceGroup.name
+        Remove-AzResourceGroup -Name $networkSettings.resourceGroup.name
     }
 }
 catch {
