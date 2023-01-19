@@ -15,7 +15,7 @@ _Please note these artifacts are under development and subject to change._
 
 ### Getting Started
 
-Before deploying the Dev Box resources, the configuration file `src/configs/main.json` needs to be updated.
+Before deploying the Dev Box resources, the parameters file `src/parameters/main.json` needs to be updated.
 
 #### Using locally with PowerShell
 
@@ -33,7 +33,7 @@ To override the default config file, use the `-ConfigFile {FilePath}` parameter.
 ./eng/deploy.sh -s "{GUID}"
 ```
 
-To override the default config file, use the `-c {FilePath}` parameter.
+To override the default parameters file, use the `-p {FilePath}` parameter.
 
 #### Using with GitHub Actions
 
