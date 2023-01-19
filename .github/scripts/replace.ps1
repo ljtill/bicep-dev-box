@@ -1,6 +1,6 @@
 
 $name = -join ((97..122) | Get-Random -Count 8 | % { [char]$_ })
-$content = Get-Content "./src/configs/main.json" | ConvertFrom-Json -Depth 25
+$content = Get-Content "./src/parameters/main.json" | ConvertFrom-Json -Depth 25
 
 # Network
 
@@ -21,4 +21,4 @@ $content.parameters.config.value.devbox.resources.projects.name = "$name"
 $content.parameters.config.value.devbox.resources.projects.description = "Deployed by GitHub Actions"
 $content.parameters.config.value.devbox.resources.projects.pools[0].name = "$name"
 
-$content | ConvertTo-Json -Depth 25 | Out-File "./src/configs/main.json"
+$content | ConvertTo-Json -Depth 25 | Out-File "./src/parameters/main.json"
