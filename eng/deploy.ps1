@@ -7,7 +7,7 @@ param (
     $SubscriptionId,
 
     [Parameter(Mandatory = $false)]
-    $ConfigFile = ((Split-Path $PSScriptRoot) + "/src/configs/main.json"),
+    $ParameterFile = ((Split-Path $PSScriptRoot) + "/src/parameters/main.json"),
 
     $InformationPreference = 'Continue',
     $ErrorActionPreference = 'Stop'
@@ -18,7 +18,7 @@ Write-Information "=> Starting deployment process..."
 # TODO: Add role assignment
 
 try {
-    Write-Information "==> Switching subscriptions..."
+    Write-Information "==> Switching subscription..."
     $null = Set-AzContext -SubscriptionId $SubscriptionId
 }
 catch {
@@ -33,7 +33,7 @@ try {
             -Name "Microsoft.Deployment.PowerShell" `
             -Location "uksouth" `
             -TemplateFile ((Split-Path $PSScriptRoot) + "/src/main.bicep") `
-            -TemplateParameterFile "$ConfigFile" `
+            -TemplateParameterFile "$ParameterFile" `
             -WhatIf
     }
     else {
@@ -42,7 +42,7 @@ try {
             -Name "Microsoft.Deployment.PowerShell" `
             -Location "uksouth" `
             -TemplateFile ((Split-Path $PSScriptRoot) + "/src/main.bicep") `
-            -TemplateParameterFile "$ConfigFile"
+            -TemplateParameterFile "$ParameterFile"
     }
 }
 catch {
