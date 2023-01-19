@@ -12,7 +12,7 @@ $content.parameters.networkSettings.value.resources.securityGroup.name = "$name"
 # DevCenter
 
 $content.parameters.config.value.devbox.resourceGroup.name = "devbox-$env:GITHUB_RUN_ID-powershell"
-$content.parameters.config.value.devbox.resourceGroup.name = "uksouth"
+$content.parameters.config.value.devbox.resourceGroup.location = "uksouth"
 $content.parameters.config.value.devbox.resources.managedIdentity.name = "$name"
 $content.parameters.config.value.devbox.resources.computeGallery.name = "$name"
 $content.parameters.config.value.devbox.resources.networkConnection.name = "$name"
