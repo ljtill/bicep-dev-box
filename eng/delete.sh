@@ -2,7 +2,7 @@
 
 RED='\033[0;31m'
 
-while getopts s:c: option
+while getopts s:p: option
 do
     case "${option}" in
         s) subscription_id=${OPTARG};;
