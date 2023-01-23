@@ -2,8 +2,11 @@ name: "Deploy"
 
 on:
   push:
-    branches: 'main'
-    paths: 'src/**'
+    branches:
+      - 'main'
+    paths:
+      - 'eng/**'
+      - 'src/**'
 
 permissions:
   id-token: write
