@@ -2,7 +2,9 @@ name: "Build"
 
 on:
   pull_request:
-    paths: 'src/**'
+    paths:
+      - 'eng/**'
+      - 'src/**'
 
 permissions:
   id-token: write
