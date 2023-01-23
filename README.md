@@ -45,6 +45,7 @@ Azure Active Directory - Application
 - Select 'Federated Credentials' and 'Add credential'
 - Provide the 'Organization (username)' and Repository for the credential
 - Select 'Entity type' - Branch and provide 'main'
+- Repeat process for 'Entity type' - Pull Request
 
 Azure Resource Manager - Role Assignment
 
@@ -57,7 +58,7 @@ GitHub Actions - Secrets
 
 - Navigate to 'Settings' on the repository
 - Select 'Secrets' and 'Actions' link
-- Select 'New repository secret' and create a secret for the following:
+- Select 'New repository secret' and create secrets for the following:
   - AZURE_TENANT_ID
   - AZURE_SUBSCRIPTION_ID
   - AZURE_CLIENT_ID
@@ -70,10 +71,6 @@ Azure Resource Manager
 - Select 'Access control (IAM)' and 'Add' - 'Add role assignment'
 - Select Role 'DevCenter Dev Box User' and select Members
 - Provide the 'Name' of the User / Groups to allow access to the Dev Box portal
-
-Browser
-
-- Navigate to the Dev Box Portal
 
 ---
 
