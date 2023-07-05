@@ -9,7 +9,7 @@ targetScope = 'resourceGroup'
 // ---------
 
 // Managed Identity
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' = {
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: devcenterSettings.resources.managedIdentity.name
   location: devcenterSettings.resourceGroup.location
   tags: devcenterSettings.tags
@@ -24,7 +24,7 @@ resource computeGallery 'Microsoft.Compute/galleries@2022-03-03' = {
 }
 
 // Network Connection
-resource networkConnection 'Microsoft.DevCenter/networkconnections@2022-11-11-preview' = {
+resource networkConnection 'Microsoft.DevCenter/networkConnections@2023-04-01' = {
   name: devcenterSettings.resources.networkConnection.name
   location: devcenterSettings.resourceGroup.location
   properties: {
@@ -36,7 +36,7 @@ resource networkConnection 'Microsoft.DevCenter/networkconnections@2022-11-11-pr
 }
 
 // DevCenter
-resource devcenter 'Microsoft.DevCenter/devcenters@2022-11-11-preview' = {
+resource devcenter 'Microsoft.DevCenter/devcenters@2023-04-01' = {
   name: devcenterSettings.resources.devcenter.name
   location: devcenterSettings.resourceGroup.location
   identity: {
@@ -50,7 +50,7 @@ resource devcenter 'Microsoft.DevCenter/devcenters@2022-11-11-preview' = {
 }
 
 // DevCenter Attached Networks
-resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2022-11-11-preview' = {
+resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2023-04-01' = {
   parent: devcenter
   name: 'default'
   properties: {
@@ -60,16 +60,16 @@ resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2022-
 
 // DevCenter Galleries
 // FIX(26): TemplateDeploymentValidationFailed
-// resource galleries 'Microsoft.DevCenter/devcenters/galleries@2022-11-11-preview' = {
-//   parent: devCenter
-//   name: config.devbox.resources.name
+// resource galleries 'Microsoft.DevCenter/devcenters/galleries@2023-04-01' = {
+//   parent: devcenter
+//   name: devcenterSettings.resources.computeGallery.name
 //   properties: {
 //     galleryResourceId: computeGallery.id
 //   }
 // }
 
 // DevCenter Definitions
-resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-11-11-preview' = [for definition in devcenterSettings.resources.definitions: {
+resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2023-04-01' = [for definition in devcenterSettings.resources.definitions: {
   parent: devcenter
   name: definition.name
   location: devcenterSettings.resourceGroup.location
@@ -89,7 +89,7 @@ resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-11-1
 
 // DevCenter Project
 // TODO: Support multiple projects
-resource project 'Microsoft.DevCenter/projects@2022-11-11-preview' = {
+resource project 'Microsoft.DevCenter/projects@2023-04-01' = {
   name: devcenterSettings.resources.projects.name
   location: devcenterSettings.resourceGroup.location
   properties: {
