@@ -60,13 +60,13 @@ resource attachedNetworks 'Microsoft.DevCenter/devcenters/attachednetworks@2023-
 
 // DevCenter Galleries
 // FIX(26): TemplateDeploymentValidationFailed
-resource galleries 'Microsoft.DevCenter/devcenters/galleries@2023-04-01' = {
-  parent: devcenter
-  name: devcenterSettings.resources.computeGallery.name
-  properties: {
-    galleryResourceId: computeGallery.id
-  }
-}
+// resource galleries 'Microsoft.DevCenter/devcenters/galleries@2023-04-01' = {
+//   parent: devcenter
+//   name: devcenterSettings.resources.computeGallery.name
+//   properties: {
+//     galleryResourceId: computeGallery.id
+//   }
+// }
 
 // DevCenter Definitions
 resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2023-04-01' = [for definition in devcenterSettings.resources.definitions: {
