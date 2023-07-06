@@ -6,20 +6,24 @@ contents="$(cat ./src/parameters/main.json)"
 # Network
 
 contents="$(echo $contents | jq '.parameters.networkSettings.value.resourceGroup.name = "'network-$GITHUB_RUN_ID-bash'"')"
-contents="$(echo $contents | jq '.parameters.networkSettings.value.resourceGroup.location = "uksouth"')"
 contents="$(echo $contents | jq '.parameters.networkSettings.value.resources.virtualNetwork.name = "'$name'"')"
 contents="$(echo $contents | jq '.parameters.networkSettings.value.resources.securityGroup.name = "'$name'"')"
+
+# Compute
+
+contents="$(echo $contents | jq '.parameters.computeSettings.value.resourceGroup.name = "'compute-$GITHUB_RUN_ID-bash'"')"
+contents="$(echo $contents | jq '.parameters.computeSettings.value.resources.galleries[0].name = "'$name'"')"
+
+# Identity
+
+contents="$(echo $contents | jq '.parameters.identitySettings.value.resourceGroup.name = "'identity-$GITHUB_RUN_ID-bash'"')"
+contents="$(echo $contents | jq '.parameters.identitySettings.value.resources.managedIdentity.name = "'$name'"')"
 
 # DevCenter
 
 contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resourceGroup.name = "'devbox-$GITHUB_RUN_ID-bash'"')"
-contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resourceGroup.location = "uksouth"')"
-contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.managedIdentity.name = "'$name'"')"
-contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.computeGallery.name = "'$name'"')"
 contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.networkConnection.name = "'$name'"')"
+contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.networkConnection.resourceGroup = "'interface-$GITHUB_RUN_ID-bash'"')"
 contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.devcenter.name = "'$name'"')"
-contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.projects.name = "'$name'"')"
-contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.projects.description = "Deployed by GitHub Actions"')"
-contents="$(echo $contents | jq '.parameters.devcenterSettings.value.resources.projects.pools[0].name = "'$name'"')"
 
 echo -E "${contents}" > ./src/parameters/main.json

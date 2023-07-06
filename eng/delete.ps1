@@ -27,6 +27,8 @@ catch {
 try {
     Write-Information "==> Parsing parameter file..."
     $networkSettings = (Get-Content -Path $ParameterFile | ConvertFrom-Json).parameters.networkSettings.value
+    $computeSettings = (Get-Content -Path $ParameterFile | ConvertFrom-Json).parameters.computeSettings.value
+    $identitySettings = (Get-Content -Path $ParameterFile | ConvertFrom-Json).parameters.identitySettings.value
     $devcenterSettings = (Get-Content -Path $ParameterFile | ConvertFrom-Json).parameters.devcenterSettings.value
 }
 catch {
@@ -47,10 +49,16 @@ try {
     }
     else {
         Write-Information "==> Deleting devcenter resources..."
-        Remove-AzResourceGroup -Name $devcenterSettings.resourceGroup.name
+        Remove-AzResourceGroup -Name $devcenterSettings.resourceGroup.name -Force
+
+        Write-Information "==> Deleting compute resources..."
+        Remove-AzResourceGroup -Name $computeSettings.resourceGroup.name -Force
+
+        Write-Information "==> Deleting identity resources..."
+        Remove-AzResourceGroup -Name $identitySettings.resourceGroup.name -Force
 
         Write-Information "==> Deleting network resources..."
-        Remove-AzResourceGroup -Name $networkSettings.resourceGroup.name
+        Remove-AzResourceGroup -Name $networkSettings.resourceGroup.name -Force
     }
 }
 catch {

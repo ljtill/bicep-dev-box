@@ -6,7 +6,8 @@
             "value": {
                 "resourceGroup": {
                     "name": "",
-                    "location": ""
+                    "location": "uksouth",
+                    "tags": {}
                 },
                 "resources": {
                     "virtualNetwork": {
@@ -19,68 +20,108 @@
                     "securityGroup": {
                         "name": ""
                     }
+                }
+            }
+        },
+        "computeSettings": {
+            "value": {
+                "resourceGroup": {
+                    "name": "",
+                    "location": "uksouth",
+                    "tags": {}
                 },
-                "tags": {}
+                "resources": {
+                    "galleries": [
+                        {
+                            "name": ""
+                        }
+                    ]
+                }
+            }
+        },
+        "identitySettings": {
+            "value": {
+                "resourceGroup": {
+                    "name": "",
+                    "location": "uksouth",
+                    "tags": {}
+                },
+                "resources": {
+                    "managedIdentity": {
+                        "name": ""
+                    }
+                }
             }
         },
         "devcenterSettings": {
             "value": {
                 "resourceGroup": {
                     "name": "",
-                    "location": ""
+                    "location": "uksouth",
+                    "tags": {}
                 },
                 "resources": {
-                    "managedIdentity": {
-                        "name": ""
-                    },
-                    "computeGallery": {
-                        "name": ""
-                    },
                     "networkConnection": {
-                        "name": ""
+                        "name": "",
+                        "resourceGroup": ""
                     },
                     "devcenter": {
                         "name": ""
                     },
                     "definitions": [
                         {
-                            "name": "base-small",
-                            "image": "win-11-ent-os-opt",
-                            "compute": "4-vcpu-16gb-mem",
-                            "storage": "256gb-ssd"
-                        },
-                        {
-                            "name": "base-medium",
-                            "image": "win-11-ent-os-opt",
+                            "name": "Standard",
+                            "image": "win-11-ent-22h2-os",
                             "compute": "8-vcpu-32gb-mem",
                             "storage": "256gb-ssd"
                         },
                         {
-                            "name": "apps-small",
-                            "image": "win-11-ent-m365-apps",
-                            "compute": "4-vcpu-16gb-mem",
+                            "name": "Office",
+                            "image": "win-11-ent-22h2-m365",
+                            "compute": "8-vcpu-32gb-mem",
                             "storage": "256gb-ssd"
                         },
                         {
-                            "name": "apps-medium",
-                            "image": "win-11-ent-m365-apps",
+                            "name": "Developer",
+                            "image": "vs-22-ent-win-11-m365",
                             "compute": "8-vcpu-32gb-mem",
                             "storage": "256gb-ssd"
                         }
                     ],
-                    "projects": {
-                        "name": "",
-                        "description": "",
-                        "pools": [
-                            {
-                                "name": "",
-                                "definition": "base-small",
-                                "administrator": "Enabled"
-                            }
-                        ]
-                    }
-                },
-                "tags": {}
+                    "environments": [
+                        {
+                            "name": "development",
+                            "tags": {}
+                        },
+                        {
+                            "name": "production",
+                            "tags": {}
+                        }
+                    ],
+                    "projects": [
+                        {
+                            "name": "default",
+                            "description": "This is the default project",
+                            "pools": [
+                                {
+                                    "name": "Standard",
+                                    "definition": "Standard",
+                                    "administrator": "Enabled"
+                                },
+                                {
+                                    "name": "Office",
+                                    "definition": "Office",
+                                    "administrator": "Enabled"
+                                },
+                                {
+                                    "name": "Developer",
+                                    "definition": "Developer",
+                                    "administrator": "Enabled"
+                                }
+                            ]
+                        }
+                    ]
+                }
             }
         }
     }
