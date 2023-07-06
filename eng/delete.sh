@@ -12,8 +12,6 @@ done
 
 echo "=> Starting deletion process..."
 
-# TODO: Add script root invocation
-
 if [ -z "$subscription_id" ]; then
     echo -e "${RED}Missing script argument (-s subscriptionId)..."
     exit 1
@@ -40,6 +38,22 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "==> Parsing parameter file..."
+compute_settings_data=$(cat $parameter_file | jq -r '.parameters.computeSettings.value')
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to parse parameter file"
+    exit 1
+fi
+
+echo "==> Parsing parameter file..."
+identity_settings_data=$(cat $parameter_file | jq -r '.parameters.identitySettings.value')
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to parse parameter file"
+    exit 1
+fi
+
+echo "==> Parsing parameter file..."
 devcenter_settings_data=$(cat $parameter_file | jq -r '.parameters.devcenterSettings.value')
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to parse parameter file"
@@ -50,10 +64,16 @@ if [ -n "$CI" ]; then
     echo "==> Skipping resource deletion..."
 else
     echo "==> Deleting devcenter resources..."
-    az group delete --name $(echo $devcenter_settings_data | jq -r '.resourceGroup.name')
+    az group delete --name $(echo $devcenter_settings_data | jq -r '.resourceGroup.name') --yes
+
+    echo "==> Deleting compute resources..."
+    az group delete --name $(echo $compute_settings_data | jq -r '.resourceGroup.name') --yes
+
+    echo "==> Deleting identity resources..."
+    az group delete --name $(echo $identity_settings_data | jq -r '.resourceGroup.name') --yes
 
     echo "==> Deleting network resources..."
-    az group delete --name $(echo $network_settings_data | jq -r '.resourceGroup.name')
+    az group delete --name $(echo $network_settings_data | jq -r '.resourceGroup.name') --yes
 fi
 
 if [ $? -ne 0 ]; then
