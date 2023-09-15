@@ -64,32 +64,19 @@ param devcenterSettings = {
     }
     definitions: [
       {
-        name: 'Standard'
+        name: 'standard'
         image: 'win-11-ent-22h2-os'
-        compute: '8-vcpu-32gb-mem'
-        storage: '256gb-ssd'
+        sku: '8-vcpu-32gb-ram-256-ssd'
       }
       {
-        name: 'Office'
+        name: 'office'
         image: 'win-11-ent-22h2-m365'
-        compute: '8-vcpu-32gb-mem'
-        storage: '256gb-ssd'
+        sku: '8-vcpu-32gb-ram-256-ssd'
       }
       {
-        name: 'Developer'
+        name: 'developer'
         image: 'vs-22-ent-win-11-m365'
-        compute: '8-vcpu-32gb-mem'
-        storage: '256gb-ssd'
-      }
-    ]
-    environments: [
-      {
-        name: 'development'
-        tags: {}
-      }
-      {
-        name: 'production'
-        tags: {}
+        sku: '8-vcpu-32gb-ram-256-ssd'
       }
     ]
     projects: [
@@ -98,18 +85,18 @@ param devcenterSettings = {
         description: 'This is the default project'
         pools: [
           {
-            name: 'Standard'
-            definition: 'Standard'
+            name: 'standard'
+            definition: ''
             administrator: 'Enabled'
           }
           {
-            name: 'Office'
-            definition: 'Office'
+            name: 'office'
+            definition: ''
             administrator: 'Enabled'
           }
           {
-            name: 'Developer'
-            definition: 'Developer'
+            name: 'developer'
+            definition: ''
             administrator: 'Enabled'
           }
         ]

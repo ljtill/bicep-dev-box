@@ -18,9 +18,8 @@ resource definitions 'Microsoft.DevCenter/devcenters/devboxdefinitions@2023-04-0
       id: '${devcenter.id}/galleries/default/images/${images[definition.image]}'
     }
     sku: {
-      name: compute[definition.compute]
+      name: skus[definition.sku]
     }
-    osStorageType: storage[definition.storage]
     hibernateSupport: 'Disabled'
   }
 }]
@@ -65,14 +64,18 @@ var images = {
   'vs-22-ent-win-11-m365': 'microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2'
 }
 
-var compute = {
-  '8-vcpu-32gb-mem': 'general_a_8c32gb_v1'
-}
-
-var storage = {
-  '256gb-ssd': 'ssd_256gb'
-  '512gb-ssd': 'ssd_512gb'
-  '1024gb-ssd': 'ssd_1024gb'
+var skus = {
+  '8-vcpu-32gb-ram-256-ssd': 'general_i_8c32gb256ssd_v2'
+  '8-vcpu-32gb-ram-512-ssd': 'general_i_8c32gb512ssd_v2'
+  '8-vcpu-32gb-ram-1024-ssd': 'general_i_8c32gb1024ssd_v2'
+  '8-vcpu-32gb-ram-2048-ssd': 'general_i_8c32gb2048ssd_v2'
+  '16-vcpu-64gb-ram-254-ssd': 'general_i_16c64gb256ssd_v2'
+  '16-vcpu-64gb-ram-512-ssd': 'general_i_16c64gb512ssd_v2'
+  '16-vcpu-64gb-ram-1024-ssd': 'general_i_16c64gb1024ssd_v2'
+  '16-vcpu-64gb-ram-2048-ssd': 'general_i_16c64gb2048ssd_v2'
+  '32-vcpu-128gb-ram-512-ssd': 'general_i_32c128gb512ssd_v2'
+  '32-vcpu-128gb-ram-1024-ssd': 'general_i_32c128gb1024ssd_v2'
+  '32-vcpu-128gb-ram-2048-ssd': 'general_i_32c128gb2048ssd_v2'
 }
 
 // ----------
