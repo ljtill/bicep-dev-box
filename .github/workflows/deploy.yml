@@ -35,4 +35,4 @@ jobs:
             --name "GitHub.Actions" \
             --location "uksouth" \
             --template-file ./src/main.bicep \
-            --parameters config=@./src/azureconfig.json
+            --parameters ./src/parameters/main.bicepparam
