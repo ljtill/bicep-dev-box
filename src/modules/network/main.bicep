@@ -9,7 +9,7 @@ targetScope = 'resourceGroup'
 // ---------
 
 // Virtual Network
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-11-01' = {
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   name: settings.resources.virtualNetwork.name
   location: settings.resourceGroup.location
   properties: {
@@ -33,7 +33,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-11-01' = {
 }
 
 // Security Group
-resource securityGroup 'Microsoft.Network/networkSecurityGroups@2022-11-01' = {
+resource securityGroup 'Microsoft.Network/networkSecurityGroups@2023-05-01' = {
   name: settings.resources.securityGroup.name
   location: settings.resourceGroup.location
   properties: {
