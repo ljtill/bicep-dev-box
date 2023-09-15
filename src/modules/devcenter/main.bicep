@@ -56,17 +56,6 @@ module definitions 'definitions/main.bicep' = {
   ]
 }
 
-module environments 'environments/main.bicep' = {
-  name: 'Microsoft.DevCenter.Environments'
-  params: {
-    settings: settings
-  }
-  dependsOn: [
-    devcenter
-    networkConnection
-  ]
-}
-
 module galleries 'galleries/main.bicep' = {
   name: 'Microsoft.DevCenter.Galleries'
   params: {
@@ -87,6 +76,7 @@ module projects 'projects/main.bicep' = {
   dependsOn: [
     devcenter
     networkConnection
+    definitions
   ]
 }
 
