@@ -16,7 +16,7 @@ resource galleries 'Microsoft.Compute/galleries@2022-03-03' = [for gallery in se
 }]
 
 // Role Assignment - Contributor
-resource roleAssignmentsContributor 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = [for i in range(0, length(settings.resources.galleries)): {
+resource roleAssignmentsContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for i in range(0, length(settings.resources.galleries)): {
   name: guid(galleries[i].name, 'Contributor')
   scope: galleries[i]
   properties: {
@@ -27,7 +27,7 @@ resource roleAssignmentsContributor 'Microsoft.Authorization/roleAssignments@202
 }]
 
 // Role Assignment - Owner
-resource roleAssignmentsReader 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = [for i in range(0, length(settings.resources.galleries)): {
+resource roleAssignmentsReader 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for i in range(0, length(settings.resources.galleries)): {
   name: guid(galleries[i].name, 'Owner')
   scope: galleries[i]
   properties: {
