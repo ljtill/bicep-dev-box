@@ -15,16 +15,7 @@ _Please note these artifacts are under development and subject to change._
 
 ### Getting Started
 
-Before deploying the Dev Box resources, the parameters file `src/parameters/main.json` needs to be updated.
-
-#### Using locally with PowerShell
-
-```powershell
-./eng/deploy.ps1 -SubscriptionId "{GUID}"
-./eng/delete.ps1 -SubscriptionId "{GUID}"
-```
-
-To override the default config file, use the `-ConfigFile {FilePath}` parameter.
+Before deploying the Dev Box resources, update the parameters file `src/parameters/main.bicepparam`.
 
 #### Using locally with Bash
 
@@ -34,6 +25,15 @@ To override the default config file, use the `-ConfigFile {FilePath}` parameter.
 ```
 
 To override the default parameters file, use the `-p {FilePath}` parameter.
+
+#### Using locally with PowerShell
+
+```powershell
+./eng/deploy.ps1 -SubscriptionId "{GUID}"
+./eng/delete.ps1 -SubscriptionId "{GUID}"
+```
+
+To override the default config file, use the `-ConfigFile {FilePath}` parameter.
 
 #### Using with GitHub Actions
 
@@ -63,7 +63,9 @@ GitHub Actions - Secrets
   - AZURE_SUBSCRIPTION_ID
   - AZURE_CLIENT_ID
 
-### Connection
+### Authentication
+
+After deploying the Azure resources, permission needs to be provided to allow users to access Dev Box.
 
 Azure Resource Manager
 
@@ -78,9 +80,10 @@ Azure Resource Manager
 
 - Virtual Network
 - Network Security Group
-- Managed Identity (User)
-- Network Connection
+- Compute Gallery
+- Managed Identity
 - DevCenter
+- DevCenter Network Connection
 - DevCenter Definitions
 - DevCenter Project
 - DevCenter Pools
