@@ -5,4 +5,4 @@
 .vscode/
 
 # Bicep
-main.local.json
+main.local.bicepparam

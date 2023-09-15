@@ -3,12 +3,17 @@
         "core": {
             "enabled": true,
             "verbose": false,
-            "rules": {}
+            "rules": {
+                "no-unused-params": {
+                    "level": "off"
+                }
+            }
         }
     },
     "cloud": {
         "currentProfile": "AzureCloud"
     },
+    "experimentalFeaturesEnabled": {},
     "moduleAliases": {
         "ts": {},
         "br": {}
